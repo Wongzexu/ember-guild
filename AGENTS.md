@@ -12,6 +12,7 @@
 | `docs/ARCHITECTURE.md` | 技术架构（Vue 3 + Vite、纯函数引擎、无后端起步） |
 | `docs/PLAN.md` | 规划流程（8 步已完成） |
 | `docs/DECISIONS.md` | 决策日志 |
+| `docs/PENDING.md` | 待办与待决策清单（跨 session 唯一来源） |
 | `docs/adr/` | ADR（架构决策记录） |
 
 ## Agent skills

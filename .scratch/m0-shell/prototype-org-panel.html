@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M0 组织面板原型（throwaway）</title>
+<style>
+  :root {
+    --ember: #e07b39;
+    --ember-dim: #8a4a22;
+    --gold: #c9a227;
+    --paper: #e8dcc0;
+    --ink: #17120d;
+    --ash: #2a2320;
+    --ash-2: #382f29;
+    --ash-3: #463b33;
+    --line: #5a4a3e;
+    --text: #d8ccc0;
+    --dim: #9a8a7a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { background: var(--ink); color: var(--text); font-family: "Noto Serif SC", "Songti SC", serif; }
+  .placeholder {
+    border: 1px dashed var(--line); border-radius: 8px; color: var(--dim);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; letter-spacing: 2px; padding: 12px;
+  }
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    font-size: 12px; border: 1px solid var(--line); color: var(--dim);
+  }
+
+  /* ============ Variant A：经典指挥桌 ============ */
+  .shell-a {
+    display: grid; grid-template-rows: 56px 1fr; grid-template-columns: 180px 1fr 220px;
+    grid-template-areas: "top top top" "left main right";
+    height: 100vh; background: var(--ink);
+  }
+  .a-topbar {
+    grid-area: top; display: flex; align-items: center; gap: 20px;
+    background: linear-gradient(180deg, var(--ash) 0%, #241d19 100%);
+    border-bottom: 1px solid var(--line); padding: 0 16px;
+  }
+  .a-topbar .org-name { font-size: 17px; color: var(--gold); letter-spacing: 3px; font-weight: 700; }
+  .a-topbar .stat { font-size: 13px; color: var(--text); }
+  .a-topbar .stat b { color: var(--gold); font-weight: 600; }
+  .a-topbar .party-status { margin-left: auto; }
+  .a-leftnav {
+    grid-area: left; border-right: 1px solid var(--line); padding: 14px 10px;
+    display: flex; flex-direction: column; gap: 6px; background: var(--ash);
+  }
+  .nav-item {
+    padding: 10px 12px; border-radius: 6px; font-size: 14px; cursor: default;
+    color: var(--dim);
+  }
+  .nav-item.active { background: var(--ash-3); color: var(--gold); border-left: 3px solid var(--ember); }
+  .a-main {
+    grid-area: main; padding: 24px; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .a-head { display: flex; align-items: baseline; gap: 14px; }
+  .a-head h1 { font-size: 26px; color: var(--paper); letter-spacing: 4px; }
+  .a-level { color: var(--ember); font-size: 15px; }
+  .a-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .a-card {
+    background: var(--ash); border: 1px solid var(--line); border-radius: 8px; padding: 14px;
+  }
+  .a-card .label { font-size: 12px; color: var(--dim); letter-spacing: 2px; }
+  .a-card .value { font-size: 22px; color: var(--gold); margin-top: 4px; }
+  .a-chronicle {
+    background: var(--ash); border: 1px solid var(--line); border-left: 3px solid var(--ember);
+    border-radius: 8px; padding: 16px;
+  }
+  .a-chronicle .c-title { font-size: 12px; color: var(--ember); letter-spacing: 3px; margin-bottom: 8px; }
+  .a-chronicle .c-text { font-size: 14px; line-height: 1.9; color: var(--paper); }
+  .a-right {
+    grid-area: right; border-left: 1px solid var(--line); padding: 14px 12px;
+    display: flex; flex-direction: column; gap: 8px; background: var(--ash);
+  }
+
+  /* ============ Variant B：战报卷轴（编年史中心） ============ */
+  .shell-b {
+    display: grid; grid-template-rows: 48px 1fr; grid-template-columns: 1fr 260px;
+    grid-template-areas: "top top" "main right";
+    height: 100vh; background: radial-gradient(ellipse at 30% 20%, #2b2118 0%, var(--ink) 60%);
+  }
+  .b-topbar {
+    grid-area: top; display: flex; align-items: center; gap: 16px;
+    background: rgba(23,18,13,0.85); border-bottom: 1px solid var(--line); padding: 0 20px;
+  }
+  .b-topbar .org-name { font-size: 15px; color: var(--gold); letter-spacing: 4px; }
+  .b-topbar .stat { font-size: 12px; color: var(--dim); }
+  .b-topbar .stat b { color: var(--paper); }
+  .b-main {
+    grid-area: main; padding: 40px 60px; overflow-y: auto;
+    display: flex; flex-direction: column; align-items: center; gap: 28px;
+  }
+  .b-scroll {
+    max-width: 720px; width: 100%; background: linear-gradient(180deg, #3a2f26, #2e251e);
+    border: 1px solid var(--line); border-radius: 4px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    padding: 40px 48px; position: relative;
+  }
+  .b-scroll::before, .b-scroll::after {
+    content: ""; position: absolute; left: 50%; transform: translateX(-50%);
+    width: 220px; height: 14px; background: repeating-linear-gradient(90deg, var(--ember) 0 10px, #3a2414 10px 20px);
+  }
+  .b-scroll::before { top: -7px; border-radius: 4px; }
+  .b-scroll::after { bottom: -7px; border-radius: 4px; }
+  .b-era { text-align: center; font-size: 12px; color: var(--ember); letter-spacing: 6px; margin-bottom: 18px; }
+  .b-chronicle-text { font-size: 17px; line-height: 2.2; color: var(--paper); text-align: center; }
+  .b-sig { margin-top: 24px; text-align: right; font-size: 12px; color: var(--dim); font-style: italic; }
+  .b-orgline { display: flex; gap: 24px; align-items: baseline; }
+  .b-orgline h1 { font-size: 20px; color: var(--gold); letter-spacing: 5px; }
+  .b-orgline .lvl { color: var(--ember); font-size: 13px; }
+  .b-placeholder-line { width: 100%; max-width: 720px; }
+  .b-right {
+    grid-area: right; border-left: 1px solid var(--line); padding: 20px 16px;
+    display: flex; flex-direction: column; gap: 10px; background: rgba(42,35,32,0.6);
+  }
+  .b-timeline-title { font-size: 12px; color: var(--ember); letter-spacing: 3px; margin-bottom: 6px; }
+  .b-timeline-item { font-size: 12px; color: var(--dim); padding-left: 12px; border-left: 2px solid var(--line); padding-bottom: 12px; }
+  .b-timeline-item.cur { color: var(--paper); border-left-color: var(--ember); }
+
+  /* ============ Variant C：极简仪表盘（HUD / 摸鱼小窗向） ============ */
+  .shell-c {
+    display: grid; grid-template-rows: 44px 44px 1fr;
+    grid-template-areas: "top top" "tabs tabs" "main main";
+    height: 100vh; background: #1b1714; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  }
+  .c-topbar {
+    grid-area: top; display: flex; align-items: center; gap: 18px;
+    background: var(--ash); border-bottom: 1px solid var(--line); padding: 0 14px;
+  }
+  .c-topbar .org-name { font-size: 13px; color: var(--gold); letter-spacing: 2px; }
+  .c-topbar .stat { font-size: 12px; color: var(--text); }
+  .c-topbar .stat b { color: var(--paper); }
+  .c-topbar .clock { margin-left: auto; font-size: 12px; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .c-tabs {
+    grid-area: tabs; display: flex; align-items: stretch; gap: 0;
+    background: var(--ash-2); border-bottom: 1px solid var(--line); padding: 0 8px;
+  }
+  .c-tab { padding: 0 18px; display: flex; align-items: center; font-size: 13px; color: var(--dim); border-bottom: 2px solid transparent; }
+  .c-tab.active { color: var(--gold); border-bottom-color: var(--ember); }
+  .c-main {
+    grid-area: main; padding: 20px; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .c-row { display: flex; gap: 14px; }
+  .c-cell {
+    background: var(--ash); border: 1px solid var(--line); border-radius: 6px; padding: 12px 16px;
+    flex: 1; display: flex; flex-direction: column; gap: 4px;
+  }
+  .c-cell .label { font-size: 11px; color: var(--dim); letter-spacing: 2px; }
+  .c-cell .value { font-size: 19px; color: var(--gold); }
+  .c-cell .sub { font-size: 11px; color: var(--dim); }
+  .c-chronicle-ticker {
+    display: flex; align-items: center; gap: 10px;
+    background: #201a15; border: 1px solid var(--line); border-left: 3px solid var(--ember);
+    border-radius: 6px; padding: 10px 14px; font-size: 12px; color: var(--paper);
+  }
+  .c-chronicle-ticker .tag { color: var(--ember); letter-spacing: 2px; flex-shrink: 0; }
+  .c-sections { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+  /* ============ 浮动切换条 ============ */
+  #switcher {
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 12px;
+    background: #0d0a08; border: 1px solid var(--ember); border-radius: 999px;
+    padding: 8px 18px; box-shadow: 0 6px 24px rgba(0,0,0,0.7);
+    z-index: 999; font-family: "Noto Sans SC", sans-serif;
+  }
+  #switcher .arrow {
+    background: none; border: none; color: var(--gold); font-size: 20px;
+    cursor: pointer; padding: 0 6px; line-height: 1;
+  }
+  #switcher .label { font-size: 13px; color: var(--paper); min-width: 220px; text-align: center; }
+  #switcher .hint { font-size: 11px; color: var(--dim); }
+</style>
+</head>
+<body>
+
+<!-- ================= Variant A：经典指挥桌 ================= -->
+<div id="v-A" class="shell-a" hidden>
+  <header class="a-topbar">
+    <span class="org-name">余烬公会</span>
+    <span class="stat">等级 <b>1</b></span>
+    <span class="stat">传奇度 <b>0</b></span>
+    <span class="stat">金币 <b>0</b></span>
+    <span class="stat">材料 <b>—</b></span>
+    <span class="party-status badge">队伍：无（敬请期待）</span>
+  </header>
+  <nav class="a-leftnav">
+    <div class="nav-item active">组织</div>
+    <div class="nav-item">英雄</div>
+    <div class="nav-item">远征</div>
+    <div class="nav-item">图鉴</div>
+  </nav>
+  <main class="a-main">
+    <div class="a-head">
+      <h1>余烬公会</h1>
+      <span class="a-level">Lv.1</span>
+      <span class="badge">灰烬纪元·元年</span>
+    </div>
+    <div class="a-cards">
+      <div class="a-card"><div class="label">传奇度</div><div class="value">0</div></div>
+      <div class="a-card"><div class="label">金币</div><div class="value">0</div></div>
+      <div class="a-card"><div class="label">材料</div><div class="value">—</div></div>
+    </div>
+    <div class="a-chronicle">
+      <div class="c-title">编 年 史</div>
+      <div class="c-text">灰烬纪元·元年：余烬公会于雅尔多拉成立。风起于余烬，传奇待书写。</div>
+    </div>
+    <div class="placeholder">当前活动面板（出征进度条 · 产出日志）——敬请期待</div>
+  </main>
+  <aside class="a-right">
+    <div class="placeholder" style="min-height:70px">背包</div>
+    <div class="placeholder" style="min-height:70px">装备栏</div>
+    <div class="placeholder" style="min-height:70px">铸造台</div>
+    <div class="placeholder" style="min-height:70px">编年史入口</div>
+  </aside>
+</div>
+
+<!-- ================= Variant B：战报卷轴（编年史中心） ================= -->
+<div id="v-B" class="shell-b" hidden>
+  <header class="b-topbar">
+    <span class="org-name">余烬公会</span>
+    <span class="stat">等级 <b>1</b></span>
+    <span class="stat">传奇度 <b>0</b></span>
+    <span class="stat">金币 <b>0</b></span>
+  </header>
+  <main class="b-main">
+    <div class="b-orgline">
+      <h1>余烬公会</h1>
+      <span class="lvl">Lv.1</span>
+      <span class="badge">灰烬纪元 · 元年</span>
+    </div>
+    <div class="b-scroll">
+      <div class="b-era">灰 烬 纪 元 · 元 年</div>
+      <div class="b-chronicle-text">余烬公会于雅尔多拉成立。<br>风起于余烬，传奇待书写。</div>
+      <div class="b-sig">—— 编年史官 · 首记</div>
+    </div>
+    <div class="placeholder b-placeholder-line">当前活动面板 —— 敬请期待</div>
+  </main>
+  <aside class="b-right">
+    <div class="b-timeline-title">编年史时间线</div>
+    <div class="b-timeline-item cur">元年 · 公会成立</div>
+    <div class="b-timeline-item">（未来的事迹将记录于此）</div>
+    <div class="placeholder" style="min-height:60px">英雄</div>
+    <div class="placeholder" style="min-height:60px">远征</div>
+    <div class="placeholder" style="min-height:60px">背包 / 铸造台</div>
+  </aside>
+</div>
+
+<!-- ================= Variant C：极简仪表盘（HUD） ================= -->
+<div id="v-C" class="shell-c" hidden>
+  <header class="c-topbar">
+    <span class="org-name">余烬公会</span>
+    <span class="stat">Lv <b>1</b></span>
+    <span class="stat">传奇 <b>0</b></span>
+    <span class="stat">金币 <b>0</b></span>
+    <span class="clock" id="c-clock">00:00:00</span>
+  </header>
+  <nav class="c-tabs">
+    <div class="c-tab active">组织</div>
+    <div class="c-tab">英雄</div>
+    <div class="c-tab">远征</div>
+    <div class="c-tab">背包</div>
+    <div class="c-tab">铸造台</div>
+    <div class="c-tab">编年史</div>
+    <div class="c-tab">图鉴</div>
+  </nav>
+  <main class="c-main">
+    <div class="c-row">
+      <div class="c-cell"><div class="label">传奇度</div><div class="value">0</div><div class="sub">组织声望</div></div>
+      <div class="c-cell"><div class="label">金币</div><div class="value">0</div><div class="sub">软通货</div></div>
+      <div class="c-cell"><div class="label">材料</div><div class="value">—</div><div class="sub">生产中间物</div></div>
+      <div class="c-cell"><div class="label">队伍</div><div class="value">0/3</div><div class="sub">最多 3 人一队</div></div>
+    </div>
+    <div class="c-chronicle-ticker">
+      <span class="tag">编年史</span>
+      <span>灰烬纪元·元年：余烬公会于雅尔多拉成立。风起于余烬，传奇待书写。</span>
+    </div>
+    <div class="c-sections">
+      <div class="placeholder" style="min-height:120px">英雄</div>
+      <div class="placeholder" style="min-height:120px">远征</div>
+      <div class="placeholder" style="min-height:120px">背包 / 装备</div>
+      <div class="placeholder" style="min-height:120px">铸造台</div>
+    </div>
+  </main>
+</div>
+
+<!-- 浮动切换条 -->
+<div id="switcher">
+  <button class="arrow" id="prev" title="上一个变体">‹</button>
+  <span class="label" id="sw-label"></span>
+  <button class="arrow" id="next" title="下一个变体">›</button>
+  <span class="hint">←/→ 切换</span>
+</div>
+
+<script>
+const VARIANTS = [
+  { key: 'A', name: '经典指挥桌（三栏布局 · 组织面板居中）' },
+  { key: 'B', name: '战报卷轴（编年史中心 · 卷轴大卡）' },
+  { key: 'C', name: '极简仪表盘（HUD · 摸鱼小窗向）' },
+];
+let current = new URLSearchParams(location.search).get('variant') || 'A';
+if (!VARIANTS.some(v => v.key === current)) current = 'A';
+
+function render() {
+  VARIANTS.forEach(v => {
+    document.getElementById('v-' + v.key).hidden = v.key !== current;
+  });
+  const meta = VARIANTS.find(v => v.key === current);
+  document.getElementById('sw-label').textContent = current + '（' + meta.name + '）';
+  const url = new URL(location.href);
+  url.searchParams.set('variant', current);
+  history.replaceState(null, '', url);
+}
+function cycle(dir) { 
+  const i = VARIANTS.findIndex(v => v.key === current);
+  current = VARIANTS[(i + dir + VARIANTS.length) % VARIANTS.length].key;
+  render();
+}
+document.getElementById('prev').addEventListener('click', () => cycle(-1));
+document.getElementById('next').addEventListener('click', () => cycle(1));
+document.addEventListener('keydown', e => {
+  const t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (e.key === 'ArrowLeft') cycle(-1);
+  if (e.key === 'ArrowRight') cycle(1);
+});
+setInterval(() => {
+  const el = document.getElementById('c-clock');
+  if (el) {
+    const h = new Date().toTimeString().slice(0, 8);
+    el.textContent = h;
+  }
+}, 1000);
+render();
+</script>
+</body>
+</html>

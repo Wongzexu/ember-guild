@@ -66,10 +66,10 @@ const onlineText = computed(() => {
 
 .scroll {
   width: 100%;
-  background: linear-gradient(180deg, #3a2f26, #2e251e);
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: 4px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--card-shadow);
   padding: 40px 48px;
   position: relative;
 }
@@ -82,11 +82,7 @@ const onlineText = computed(() => {
   transform: translateX(-50%);
   width: 220px;
   height: 14px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--ember) 0 10px,
-    #3a2414 10px 20px
-  );
+  background: var(--rod-bg);
 }
 
 .scroll::before {

@@ -10,6 +10,42 @@
   --line: #5a4a3e;
   --text: #d8ccc0;
   --dim: #9a8a7a;
+  --bg-glow: #2b2118;
+  --topbar-bg: rgba(23, 18, 13, 0.85);
+  --rail-bg: rgba(42, 35, 32, 0.6);
+  --card-bg: linear-gradient(180deg, #3a2f26, #2e251e);
+  --card-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  --rod-bg: repeating-linear-gradient(
+    90deg,
+    var(--ember) 0 10px,
+    #3a2414 10px 20px
+  );
+}
+
+[data-theme="light"] {
+  --ember: #b9591b;
+  --ember-dim: #96451a;
+  --gold: #8a6a10;
+  --paper: #241a10;
+  --ink: #ece1cb;
+  --ash: #ddd0b2;
+  --ash-2: #d2c29f;
+  --ash-3: #c2ad84;
+  --line: #ab9368;
+  --text: #47371f;
+  --dim: #7c6444;
+  --bg-glow: #f7efd9;
+  --topbar-bg: rgba(236, 225, 203, 0.88);
+  --rail-bg: rgba(224, 211, 183, 0.55);
+  --card-bg: linear-gradient(180deg, #faf3de, #efe2c2);
+  --card-shadow: 0 12px 40px rgba(96, 68, 30, 0.28);
+  --rod-bg: linear-gradient(
+      180deg,
+      rgba(255, 248, 226, 0.55) 0%,
+      rgba(255, 248, 226, 0.12) 35%,
+      rgba(255, 248, 226, 0) 65%
+    ),
+    linear-gradient(180deg, #d4ae72 0%, #bd9254 45%, #97713c 100%);
 }
 
 * {

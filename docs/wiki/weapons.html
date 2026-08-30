@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>武器系统 · 挂机远征设定维基</title>
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<div class="wiki-layout">
+<aside class="sidebar">
+  <a class="logo" href="index.html">
+    <span class="seal">远征</span>
+    <span class="site-name">挂机远征<span class="site-sub">SETTING WIKI</span></span>
+  </a>
+  <nav>
+    <h3>词条</h3>
+    <ul>
+      <li><a href="index.html">首页</a></li>
+      <li><a href="attribute-disc.html">属性盘</a></li>
+      <li><a href="element-ring.html">元素环</a></li>
+      <li><a href="combat.html">战斗体系</a></li>
+      <li><a href="weapons.html" class="here">武器系统</a></li>
+      <li><a href="weapon-ring.html">武器圆环</a></li>
+      <li><a href="heroes.html">英雄系统</a>
+        <ul class="subnav">
+          <li><a href="roster.html">英雄图鉴</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>规划文档</h3>
+    <ul>
+      <li><a href="../GDD.md">GDD 游戏设计</a></li>
+      <li><a href="../SYSTEMS.md">SYSTEMS 体系骨架</a></li>
+      <li><a href="../WEAPONS.md">WEAPONS 武器正文</a></li>
+      <li><a href="../NUMBERS.md">NUMBERS 数值细则</a></li>
+      <li><a href="../DECISIONS.md">DECISIONS 决策日志</a></li>
+    </ul>
+  </nav>
+  <p class="pedia-note">本维基条目为规划文档的「机制纲要版」——结构不写死、数值一律以 NUMBERS 原文为准。</p>
+</aside>
+
+<main class="main">
+<article class="article">
+<h1 class="article-title">武器系统 <span class="subtitle">12 类 · 词缀 · 铸造</span></h1>
+
+<p class="hatnote"><b>本文介绍的是武器系统整体机制。</b>武器的属性分区与圆环图见 <a href="weapon-ring.html">武器圆环</a>；数字细则（基底阶梯/词缀数值/通货掉率）归 <a href="../NUMBERS.md">NUMBERS</a> §5~§6。依据 <a href="../WEAPONS.md">WEAPONS v1.0</a> 整理。</p>
+
+<div class="infobox">
+  <div class="ib-title">武器系统</div>
+  <table>
+    <tr><td class="k">版本</td><td class="v">v1.0</td></tr>
+    <tr><td class="k">类型</td><td class="v">12 类 = 单手 4 + 双手 8</td></tr>
+    <tr><td class="k">构造方式</td><td class="v">PoE 式简化<span class="sub">基底 + 前缀/后缀词缀 + Tier + 稀有度 + 通货锻造</span></td></tr>
+    <tr><td class="k">核心铁律</td><td class="v">武器决定流派<span class="sub">换装即换定位；基底谁都能用，职业仅「顺手偏好」</span></td></tr>
+    <tr><td class="k">装备位</td><td class="v">8 槽（主手/副手/头/身/手/脚/戒/链）</td></tr>
+    <tr><td class="k">数值细则</td><td class="v"><a href="../NUMBERS.md">NUMBERS</a> §5~§6</td></tr>
+    <tr><td class="k">决策沿革</td><td class="v">DECISIONS v0.11~v0.13</td></tr>
+  </table>
+</div>
+
+<h2 id="principles">1. 设计原则</h2>
+<p>PoE 简化版：<b>基底 + 前缀/后缀词缀 + Tier + 稀有度 + 通货锻造</b>；不做连线、技能宝石、打孔符文（灵珠列为后期可选）。两条铁律：</p>
+<ul class="clean">
+  <li><b>武器决定流派</b>——换装即换定位。</li>
+  <li><b>基底谁都能用</b>，职业仅是「顺手偏好」，不锁死（规划按 12 职业映射，落位按通用基底）。</li>
+</ul>
+
+<h2 id="types">2. 武器类型（12 类 = 单手 4 + 双手 8）</h2>
+<table class="wikitable">
+  <tr><th>类型</th><th>持用</th><th>手感带</th><th>伤害侧</th><th>副手选单</th></tr>
+  <tr><td>单手锤</td><td>单手</td><td>慢·重</td><td>物理</td><td>盾 ⊕ 双持</td></tr>
+  <tr><td>短刀</td><td>单手</td><td>极快·轻</td><td>物理</td><td>盾 ⊕ 双持</td></tr>
+  <tr><td>短杖</td><td>单手</td><td>快·低威·高频</td><td>法术</td><td>符盾 ⊕ 双持</td></tr>
+  <tr><td>单手剑</td><td>单手</td><td>中·中</td><td>物理</td><td>盾 ⊕ 双持</td></tr>
+  <tr><td>大锤</td><td>双手</td><td>极慢·极重</td><td>物理</td><td>无</td></tr>
+  <tr><td>大剑</td><td>双手</td><td>中·宽</td><td>物理</td><td>无</td></tr>
+  <tr><td>矛</td><td><b>双手</b></td><td>中·宽</td><td>物理（投掷=词缀转换）</td><td>无</td></tr>
+  <tr><td>匕首</td><td><b>双手</b></td><td>快·轻</td><td>物理（飞掷=词缀转换）</td><td>无</td></tr>
+  <tr><td>弓</td><td>双手</td><td>极快·速射</td><td>物理</td><td>无</td></tr>
+  <tr><td>弩</td><td>双手</td><td>形态分档</td><td>物理</td><td>无</td></tr>
+  <tr><td>长杖</td><td>双手</td><td>慢·高威</td><td>法术（近战扫击=词缀转换）</td><td>无</td></tr>
+  <tr><td>法器</td><td><b>双手</b></td><td>慢·咒具重压</td><td>法术</td><td>无</td></tr>
+</table>
+<p>分类的几何依据（核归属 / 桥位 / 通吃）见 <a href="weapon-ring.html">武器圆环</a>。</p>
+
+<h2 id="forms">3. 形态（不拆类型 · 参数带内变体）</h2>
+<table class="wikitable">
+  <tr><th>载体</th><th>形态</th></tr>
+  <tr><td><b>弩</b> = 单类型</td><td>轻弩（极快·低伤）/ 重弩（慢·高伤）——形态定攻速/伤害，不拆类型</td></tr>
+  <tr><td><b>矛 / 匕首 / 长杖</b> = 桥位双形态</td><td>投掷 / 飞掷 / 扫击——条件词缀显性文本（例：「作为远程武器使用时，攻速/命中 +X%」）</td></tr>
+  <tr><td><b>盾</b> = 副手大类</td><td>三形态：物盾（力·免伤）/ 轻盾（敏·格挡）/ 符盾（智·施法增益）</td></tr>
+  <tr><td><b>单手剑</b> = 三倾向</td><td>剑气（力·远程）/ 快击（敏·近战速）/ 法刃（智·近战法术）</td></tr>
+</table>
+
+<h2 id="hands">4. 单手/双手与副手</h2>
+<table class="wikitable">
+  <tr><th>场景</th><th>规则</th></tr>
+  <tr><td>单手武器（锤/刀/杖/剑）</td><td>副手 = <b>盾</b>（形态随属性倾向）⊕ <b>双持</b>（另一把单手武器）</td></tr>
+  <tr><td>双手武器（锤/剑/矛/匕首/弓/弩/杖/法器）</td><td>无副手，<b>占两槽</b></td></tr>
+</table>
+
+<h2 id="mods">5. 词缀结构</h2>
+<table class="wikitable">
+  <tr><th>槽</th><th>内容</th><th>Tier</th></tr>
+  <tr><td><b>前缀</b>（伤害向）</td><td>+物伤 / +元素伤 / 攻速 / 暴击</td><td>I~III（数值区间见 NUMBERS §5.2）</td></tr>
+  <tr><td><b>后缀</b>（属性/条件向）</td><td>+属性 / 命中 / 形态条件词缀（「作为远程武器使用时…」）</td><td>I~III</td></tr>
+</table>
+<ul class="clean">
+  <li><b>稀有度 → 词缀数</b>：普通 0 / 稀有 1~2 / 史诗 3~4 / 传说 4~6 ＋ 1 条<b>独占触发词缀</b>（例：「击败敌人时 5% 几率触发烧伤」）；最多 3 前 + 3 后。</li>
+  <li><b>iLv 定天花板</b>：Tier 解锁门槛（III=1 / II=35 / I=65，NUMBERS §5.5）。</li>
+  <li><b>固有词缀（基底隐性）</b>与词缀池分离（铜锤 = 无词缀白装）。</li>
+</ul>
+
+<h2 id="slots">6. 装备槽位（8 位 · v0.13 定案）</h2>
+<table class="wikitable">
+  <tr><th>槽位</th><th>默认</th><th>备注</th></tr>
+  <tr><td>主手</td><td>武器（单手/双手占用）</td><td>双手武器同时占主+副</td></tr>
+  <tr><td>副手</td><td>盾（物盾/轻盾/符盾）⊕ 双持</td><td>单手武器才有副手选单</td></tr>
+  <tr><td>头 / 身 / 手 / 脚</td><td>防具 4</td><td>各带各自词缀池（防具池通用）</td></tr>
+  <tr><td>戒指 / 项链</td><td>饰品 2</td><td>词缀池最稀（「诱人词缀」优选位）</td></tr>
+</table>
+
+<h2 id="crafting">7. 铸造与通货</h2>
+<p>通货锻造（蜕变/改造/点金/重铸/混沌/崇高/神圣——掉率 NUMBERS §6）+ <b>铸造台保底</b>（指定词缀必上、升级档、重 roll——对冲「纯随机劝退」，NUMBERS §5.6）。</p>
+
+<h2 id="see">参见</h2>
+<div class="seealso">
+  <ul>
+    <li><a href="weapon-ring.html">武器圆环</a> — 属性大圆分区：六核 × 12 类武器（含环形图 + 单/双手图鉴）</li>
+    <li><a href="attribute-disc.html">属性盘</a> — 核归属的源头（力/敏/智 & 三混合）</li>
+    <li><a href="combat.html">战斗体系</a> — 武器伤害 = 物理极基准</li>
+  </ul>
+  <span class="note">依据：<a href="../WEAPONS.md">WEAPONS v1.0</a> · 数值：<a href="../NUMBERS.md">NUMBERS §5~§6</a></span>
+</div>
+
+<div class="catlinks"><b>分类</b><a href="index.html">装备体系</a><a href="weapon-ring.html">武器圆环</a><a href="combat.html">战斗体系</a></div>
+
+<footer class="site-footer">
+  武器系统 · 依据 WEAPONS v1.0 · 本页同步于 M2 开发期
+</footer>
+</article>
+</main>
+</div>
+</body>
+</html>

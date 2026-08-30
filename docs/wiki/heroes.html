@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英雄系统 · 挂机远征设定维基</title>
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<div class="wiki-layout">
+<aside class="sidebar">
+  <a class="logo" href="index.html">
+    <span class="seal">远征</span>
+    <span class="site-name">挂机远征<span class="site-sub">SETTING WIKI</span></span>
+  </a>
+  <nav>
+    <h3>词条</h3>
+    <ul>
+      <li><a href="index.html">首页</a></li>
+      <li><a href="attribute-disc.html">属性盘</a></li>
+      <li><a href="element-ring.html">元素环</a></li>
+      <li><a href="combat.html">战斗体系</a></li>
+      <li><a href="weapons.html">武器系统</a></li>
+      <li><a href="weapon-ring.html">武器圆环</a></li>
+      <li><a href="heroes.html" class="here">英雄系统</a>
+        <ul class="subnav">
+          <li><a href="roster.html">英雄图鉴</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>规划文档</h3>
+    <ul>
+      <li><a href="../GDD.md">GDD 游戏设计</a></li>
+      <li><a href="../SYSTEMS.md">SYSTEMS 体系骨架</a></li>
+      <li><a href="../WEAPONS.md">WEAPONS 武器正文</a></li>
+      <li><a href="../NUMBERS.md">NUMBERS 数值细则</a></li>
+      <li><a href="../DECISIONS.md">DECISIONS 决策日志</a></li>
+    </ul>
+  </nav>
+  <p class="pedia-note">本维基条目为规划文档的「机制纲要版」——结构不写死、数值一律以 NUMBERS 原文为准。</p>
+</aside>
+
+<main class="main">
+<article class="article">
+<h1 class="article-title">英雄系统 <span class="subtitle">无稀有度 · 十二职业</span></h1>
+
+<p class="hatnote"><b>本文介绍的是英雄系统</b>——英雄的构成、成长与定位。五维与职业落位见 <a href="attribute-disc.html">属性盘</a>；武器与装备见 <a href="weapons.html">武器系统</a>。依据 <a href="../HEROES.md">HEROES v1.0</a> 整理。</p>
+
+<div class="subpages">
+  <div class="sp-title">子词条</div>
+  <ul>
+    <li><a href="roster.html">英雄图鉴</a> — 具体英雄卡汇总（人设 / 口头禅 / 叙事触点 / 数据条 · 首卡艾格雷姆）</li>
+  </ul>
+</div>
+
+<div class="infobox">
+  <div class="ib-title">英雄系统</div>
+  <table>
+    <tr><td class="k">版本</td><td class="v">v1.0</td></tr>
+    <tr><td class="k">构成</td><td class="v">名字 + 职业 + 等级 + 性格/背景<span class="sub"><b>无稀有度</b>——稀有度只属于装备</span></td></tr>
+    <tr><td class="k">等级上限</td><td class="v">100（正常途径）<span class="sub">世界事件/传奇内容可突破；成长曲线前期快后期慢</span></td></tr>
+    <tr><td class="k">职业</td><td class="v">12 职 = 六核 × 近/远家族<span class="sub">职业与元素无关</span></td></tr>
+    <tr><td class="k">家族轴</td><td class="v">近战 VIT 额外成长 / 远程 AGI 额外成长<span class="sub">面板可见 · 职业描述点明</span></td></tr>
+    <tr><td class="k">天赋</td><td class="v">等级达标解锁 · 被动词条<span class="sub">Torchlight 式，无需手动加点</span></td></tr>
+    <tr><td class="k">数值细则</td><td class="v"><a href="../NUMBERS.md">NUMBERS</a> §3</td></tr>
+    <tr><td class="k">决策沿革</td><td class="v">DECISIONS v0.3~v0.5</td></tr>
+  </table>
+</div>
+
+<h2 id="who">1. 英雄构成</h2>
+<p>英雄 = <b>名字 + 职业 + 等级 + 性格/背景</b>。没有稀有度——<b>稀有度只属于装备</b>（PoE 原生形态，DECISIONS v0.3）。英雄的「贵贱」由关卡与故事定义，不由档位定义。</p>
+
+<h2 id="level">2. 等级</h2>
+<ul class="clean">
+  <li>上限 <b>100</b>（正常途径）；特殊途径（世界事件/传奇内容）可突破 100。</li>
+  <li>成长曲线保留（RS：前期快、后期慢）；获取时的<b>初始等级差异</b>承担原「稀有度」的语义——差异在<b>起跑线</b>，不在天花板。</li>
+  <li><b>所有英雄都可无限成长</b>。</li>
+</ul>
+
+<h2 id="class">3. 职业（12 职业 · 六核 × 近/远）</h2>
+<ul class="clean">
+  <li>12 职业 = <b>六核</b>（纯力/纯敏/纯智/力敏/敏智/力智）× <b>近/远武器家族</b>（NUMBERS §3.4 表）。</li>
+  <li>职业决定<b>属性成长曲线 + 武器条件天赋</b>；同一核的近/远职业共享成长，差异在家族轴与天赋。</li>
+  <li>职业与元素<b>无关</b>——元素偏向只在元素体系内部（见 <a href="element-ring.html">元素环</a>）。</li>
+</ul>
+
+<h2 id="family">4. 家族轴（显性）</h2>
+<p>近战职业 <b>VIT</b> 额外成长、远程职业 <b>AGI</b> 额外成长（+0.5/级 · 暂定）——面板可见、职业描述点明（「家族倾向：坚实体魄 / 灵巧身法」）。家族轴独立于六核，是<a href="attribute-disc.html">属性盘</a>上的<b>轴外坐标</b>。</p>
+
+<h2 id="stats">5. 属性（五维）</h2>
+<p>五维 = <b>三核伤害轴（力量 / 敏捷 / 智力）+ 生存对（体质 / 灵巧）</b>（NUMBERS §3.1 序号 = STR / DEX / INT / VIT / AGI）。职业曲线 + 家族轴为基准，玩家<b>策略倾向</b>（偏攻/偏肉/偏速/偏智/均衡）做权重微调——不费脑，适合挂机。</p>
+
+<h2 id="talents">6. 天赋（被动词条 · Torchlight 式）</h2>
+<p>随<b>等级达标解锁词条</b>（例：艾格雷姆 Lv.5 STR+5），自动生效、无需手动加点；词条条件 = 近/远武器家族 + 通用垫底（NUMBERS §3.3/§3.4）。</p>
+
+<h2 id="gear">7. 装备定型（武器决定流派）</h2>
+<ul class="clean">
+  <li>近战武器（大锤/短刀/大剑/矛/匕首…）→ 物理近战向；法术武器（短杖/长杖/法器）→ 施法向；弓弩 → 远程速攻向。</li>
+  <li><b>换装备即换定位</b>（PoE 式自由）；天赋对武器家族取条件，<b>跨族换装只弱化不报废</b>。</li>
+  <li>武器 12 类清单/圆环见 <a href="weapon-ring.html">武器圆环</a> 与 <a href="weapons.html">武器系统</a>。</li>
+</ul>
+
+<h2 id="flavor">8. 性格与背景（人设引擎）</h2>
+<p>每个英雄有性格/口头禅/背景故事 → 喂给「离线自主行动」和「编年史」，让英雄是「人」不是「数值」。模板基调（首英雄定调）：<b>守护者 · 责任在心</b>——温和、手粗、有担当；厌战不是怯懦，是看够了；二次召集者，无大义口号——「这炉火，总得有人守着。」</p>
+
+<h3 id="aegrim">8.1 首英雄卡 · 艾格雷姆（铁砧 / 纯力近战）</h3>
+<p>首英雄人设已定调：<b>守护者 · 责任在心</b>。「这炉火，总得有人守着。」——完整英雄卡（性格/口头禅/叙事触点/数据条）见 <a href="roster.html#aegrim">英雄图鉴</a>。</p>
+
+<h2 id="recruit">9. 招募</h2>
+<p>酒馆招募（消耗金币/线索）、远征掉落线索、高难委托慕名加入（保留）。</p>
+
+<h2 id="see">参见</h2>
+<div class="seealso">
+  <ul>
+    <li><a href="roster.html">英雄图鉴</a> — 具体英雄卡：人设/口头禅/数据条汇总</li>
+    <li><a href="attribute-disc.html">属性盘</a> — 五维与六核：职业曲线的几何基准</li>
+    <li><a href="weapon-ring.html">武器圆环</a> — 武器决定流派：12 类武器的核归属</li>
+    <li><a href="combat.html">战斗体系</a> — 属性转出后的进账端（命闪/防御/伤害）</li>
+  </ul>
+  <span class="note">依据：<a href="../HEROES.md">HEROES v1.0</a> · 数值：<a href="../NUMBERS.md">NUMBERS §3</a></span>
+</div>
+
+<div class="catlinks"><b>分类</b><a href="index.html">英雄</a><a href="attribute-disc.html">属性体系</a><a href="weapons.html">装备体系</a></div>
+
+<footer class="site-footer">
+  英雄系统 · 依据 HEROES v1.0 · 本页同步于 M2 开发期
+</footer>
+</article>
+</main>
+</div>
+</body>
+</html>

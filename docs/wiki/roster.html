@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英雄图鉴 · 挂机远征设定维基</title>
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<div class="wiki-layout">
+<aside class="sidebar">
+  <a class="logo" href="index.html">
+    <span class="seal">远征</span>
+    <span class="site-name">挂机远征<span class="site-sub">SETTING WIKI</span></span>
+  </a>
+  <nav>
+    <h3>词条</h3>
+    <ul>
+      <li><a href="index.html">首页</a></li>
+      <li><a href="attribute-disc.html">属性盘</a></li>
+      <li><a href="element-ring.html">元素环</a></li>
+      <li><a href="combat.html">战斗体系</a></li>
+      <li><a href="weapons.html">武器系统</a></li>
+      <li><a href="weapon-ring.html">武器圆环</a></li>
+      <li><a href="heroes.html">英雄系统</a>
+        <ul class="subnav">
+          <li><a href="roster.html" class="here">英雄图鉴</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>规划文档</h3>
+    <ul>
+      <li><a href="../GDD.md">GDD 游戏设计</a></li>
+      <li><a href="../SYSTEMS.md">SYSTEMS 体系骨架</a></li>
+      <li><a href="../WEAPONS.md">WEAPONS 武器正文</a></li>
+      <li><a href="../NUMBERS.md">NUMBERS 数值细则</a></li>
+      <li><a href="../DECISIONS.md">DECISIONS 决策日志</a></li>
+    </ul>
+  </nav>
+  <p class="pedia-note">本维基条目为规划文档的「机制纲要版」——结构不写死、数值一律以 NUMBERS 原文为准。</p>
+</aside>
+
+<main class="main">
+<article class="article">
+<div class="crumb"><a href="heroes.html">英雄系统</a> › <b>英雄图鉴</b></div>
+<h1 class="article-title">英雄图鉴 <span class="subtitle">英雄卡汇总页</span></h1>
+
+<p class="hatnote"><b>本文收录具体的英雄卡</b>——每位英雄的人设、口头禅、叙事触点与数据条索引（数值见 NUMBERS）。英雄的机制正文（构成/职业/天赋/招募）见 <a href="heroes.html">英雄系统</a>；本页为图鉴，后续新增英雄在此补录。</p>
+
+<div class="tocbox">
+  <div class="toc-title">目录</div>
+  <ul>
+    <li><a href="#aegrim">1. 艾格雷姆（铁砧）</a></li>
+  </ul>
+</div>
+
+<h2 id="aegrim">1. 艾格雷姆 <span class="note">（铁砧 · 纯力近战）</span></h2>
+
+<section class="herosheet">
+  <div class="hs-head">艾格雷姆 <span class="hs-role">铁砧 / 纯力近战 · 六核落位=力点</span></div>
+  <div class="hs-grid">
+    <div class="hs-flavor">
+      余烬公会的第一口炉子，是艾格雷姆从炉镇抬来的。三十年前他是带队的英雄——不靠嗓门，靠「他在，大家就能睡着觉」那种靠得住。仗打完了，他厌倦了：把剑挂上墙，回炉镇烧了三十年铁。犁锄、钢圈、门轴，日子就着炉火过。镇上老人说：「艾师傅的东西扎实，跟他打过仗的人一样。」
+      <p>灰烬纪元那几年，墙外渐渐不太平——有村子粮被烧、有整队人倒在山口、有人说「墙里各顾各，火没人管」。那夜，一个半大后生砸响铺门：老部下托付过的儿子，带着伤，只说了半句：「队伍散了……他们说，咱们是不是再没有『整队人一起走、一起回来』的事了？」</p>
+      <p>艾格雷姆没答话。他走回炉边，把挂了几十年的锤子拿起来——又放下，他提起了炉子。</p>
+      <p>「炉火没熄，我就还在。」他说。</p>
+      <p>第二天，老队长出现在余烬公会院子里，亲手砌好老炉子，给每个来的人打第一把武器。问他为什么，他从不讲大义，只一句：<b>「这炉火，总得有人守着。」</b>——责任在心，不外露，也不卸下。</p>
+    </div>
+    <div class="hs-data">
+      <table>
+        <tr><td class="k">职业</td><td class="v">铁砧（纯力近战）</td></tr>
+        <tr><td class="k">性格</td><td class="v">守护者 · 责任在心<span class="sub">温和 · 手粗 · 有担当；厌战不是怯懦，是看够了</span></td></tr>
+        <tr><td class="k">口头禅</td><td class="v">「炉火没熄，我就还在。」</td></tr>
+        <tr><td class="k">叙事触点</td><td class="v">①出工前「铁砧不响，活儿还没完」<span class="sp">②挨打时「炉火没熄，我就还在」</span><span class="sp">③收尾时「砸下去的，都得是好活儿」</span></td></tr>
+        <tr><td class="k">数据条</td><td class="v"><a href="#aegrim-stats">成长数据 §1.1</a><span class="sub">起始属性 / 成长系数 / 天赋 / 投算锚点；铜锤 = NUMBERS §5.1</span></td></tr>
+        <tr><td class="k">人设模板</td><td class="v">温斯顿式<span class="sub">OW 温斯顿 · 参考原型，不进游戏文案</span></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<h3 id="aegrim-stats">1.1 成长数据（NUMBERS §3.5 · M1 占位草案）</h3>
+<p class="note">⚠️ 全表数值 = 占位草案（结构已定，数字后续可调）；引擎 = 唯一账本，本节为 <a href="../NUMBERS.md">NUMBERS §3.5</a> 打印件引用。</p>
+
+<h4>起始属性（Lv.1）</h4>
+<table class="wikitable">
+  <tr><th>属性</th><th>初始值</th></tr>
+  <tr><td>力量（STR）</td><td>12</td></tr>
+  <tr><td>敏捷（DEX）</td><td>8</td></tr>
+  <tr><td>智力（INT）</td><td>5</td></tr>
+  <tr><td>体质（VIT）</td><td>12</td></tr>
+  <tr><td>灵巧（AGI）</td><td>7</td></tr>
+</table>
+<p class="note">占位理由：纯力核 → STR/VIT 双高、INT 垫底（轴向后端），DEX/AGI 中平（近战）——与「力点」几何落位一致。</p>
+
+<h4>成长系数（#3 口径 · 唯一账本）</h4>
+<ul class="clean">
+  <li>公式：<code>属性 = 起始 + (等级−1) × (1 + 核系数 + 家族轴) + 天赋</code>（§3.2）</li>
+  <li>五维各 +1/级（基础）；<b>力量</b> 单核额外 +0.4/级；<b>近战家族体质</b> 额外 +0.5/级（100 级差约 50 点，体感「近战硬」）</li>
+  <li>显示取整（向上），底层保留浮点；<b>未计入倾向点</b>（每 5 级 +2 点，M2 起随策略倾向实现）</li>
+</ul>
+
+<h4>天赋节点（§3.3 · 条件=通用 / 持近战武器）</h4>
+<table class="wikitable">
+  <tr><th>等级</th><th>词条</th><th>条件</th></tr>
+  <tr><td>Lv.5</td><td>力量 +5（主属性拍）</td><td>通用</td></tr>
+  <tr><td>Lv.10</td><td>物抗 +5% / 法抗 +5%（双抗拍 · 力量轴坐轴双给）</td><td>通用</td></tr>
+  <tr><td>Lv.15</td><td>体质 +10（生存拍 ≈ +120 HP）</td><td>通用</td></tr>
+  <tr><td>Lv.20</td><td>生命 +50 & 力量+3 / 体质+4 / 敏捷+2 / 灵巧+1（多而小拍）</td><td>通用</td></tr>
+  <tr><td>Lv.25</td><td>攻速 +10%（通用节奏拍 · 首个攻速乘区测试用例）</td><td>通用</td></tr>
+  <tr><td>Lv.30</td><td>近战伤害 +15%（家族条件增幅拍）</td><td>持近战武器（<code>condition.family = melee</code>）</td></tr>
+  <tr><td>Lv.35+</td><td>六拍循环：主属性→双抗→生存→多而小→通用节奏→家族条件增伤（数值随档位放大；Lv.35 = 生存拍，M2 定数）</td><td>—</td></tr>
+</table>
+
+<h4>投算锚点（§3.5 主表 · 脚本打印件）</h4>
+<table class="wikitable">
+  <tr><th>等级</th><th>力量<br>（STR）</th><th>敏捷<br>（DEX）</th><th>智力<br>（INT）</th><th>体质<br>（VIT）</th><th>灵巧<br>（AGI）</th><th>HP</th><th>物抗</th><th>法抗</th><th>备注</th></tr>
+  <tr><td>1</td><td>12</td><td>8</td><td>5</td><td>12</td><td>7</td><td>244</td><td>3.8%</td><td>3.8%</td><td>无词条（纯成长）</td></tr>
+  <tr><td>5</td><td>23</td><td>12</td><td>9</td><td>18</td><td>11</td><td>316</td><td>5.7%</td><td>5.7%</td><td>天赋 Lv5 力量+5</td></tr>
+  <tr><td>10</td><td>30</td><td>17</td><td>14</td><td>26</td><td>16</td><td>406</td><td>12.8%</td><td>12.8%</td><td>天赋 Lv5/10</td></tr>
+  <tr><td>15</td><td>37</td><td>22</td><td>19</td><td>43</td><td>21</td><td>616</td><td>17.5%</td><td>17.5%</td><td>天赋 Lv5/10/15</td></tr>
+  <tr><td>20</td><td>47</td><td>29</td><td>24</td><td>55</td><td>27</td><td>804</td><td>20.4%</td><td>20.4%</td><td>天赋 Lv5/10/15/20</td></tr>
+  <tr><td>30</td><td>61</td><td>39</td><td>34</td><td>70</td><td>37</td><td>984</td><td>23.8%</td><td>23.8%</td><td>天赋 Lv5→20</td></tr>
+  <tr><td>50</td><td>89</td><td>59</td><td>54</td><td>100</td><td>57</td><td>1344</td><td>29.9%</td><td>29.9%</td><td>天赋 Lv5→20</td></tr>
+  <tr><td>99</td><td>158</td><td>108</td><td>103</td><td>173</td><td>106</td><td>2226</td><td>41.6%</td><td>41.6%</td><td>天赋 Lv5→20</td></tr>
+</table>
+<p class="note">生成口径：<code>game/scripts/gen-hero-stats.mjs</code> 从引擎 <code>heroStats()</code> 打印（文档 = 打印件，永久消灭漂移）。</p>
+
+<h2 id="note">2. 图鉴说明</h2>
+<p>英雄卡统一字段：<b>职业 · 性格 · 口头禅 · 叙事触点 · 数据条（NUMBERS 引用）· 人设模板</b>。数值细则一律引用 NUMBERS 原文，本页只收录卡面与人设；后续新英雄按同一模板补录即可（如：余烬公会第二批 —— 待定稿）。</p>
+
+<h2 id="see">参见</h2>
+<div class="seealso">
+  <ul>
+    <li><a href="heroes.html">英雄系统</a> — 英雄卡的机制正文（构成/职业/家族轴/天赋/招募）</li>
+    <li><a href="attribute-disc.html">属性盘</a> — 「六核落位=力点」的几何坐标</li>
+    <li><a href="weapon-ring.html">武器圆环</a> — 铁砧的武器带（单手锤/大锤/大剑）</li>
+  </ul>
+  <span class="note">人设依据：<a href="../HEROES.md">HEROES §8.1</a> · 数值：<a href="../NUMBERS.md">NUMBERS §3.5</a></span>
+</div>
+
+<div class="catlinks"><b>分类</b><a href="index.html">英雄</a><a href="heroes.html">英雄系统</a><a href="attribute-disc.html">属性体系</a></div>
+
+<footer class="site-footer">
+  英雄图鉴 · 首英雄定调 · 后续补录中
+</footer>
+</article>
+</main>
+</div>
+</body>
+</html>

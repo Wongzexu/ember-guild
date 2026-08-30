@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>属性盘 · 挂机远征设定维基</title>
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<div class="wiki-layout">
+<aside class="sidebar">
+  <a class="logo" href="index.html">
+    <span class="seal">远征</span>
+    <span class="site-name">挂机远征<span class="site-sub">SETTING WIKI</span></span>
+  </a>
+  <nav>
+    <h3>词条</h3>
+    <ul>
+      <li><a href="index.html">首页</a></li>
+      <li><a href="attribute-disc.html" class="here">属性盘</a></li>
+      <li><a href="element-ring.html">元素环</a></li>
+      <li><a href="combat.html">战斗体系</a></li>
+      <li><a href="weapons.html">武器系统</a></li>
+      <li><a href="weapon-ring.html">武器圆环</a></li>
+      <li><a href="heroes.html">英雄系统</a>
+        <ul class="subnav">
+          <li><a href="roster.html">英雄图鉴</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>规划文档</h3>
+    <ul>
+      <li><a href="../GDD.md">GDD 游戏设计</a></li>
+      <li><a href="../SYSTEMS.md">SYSTEMS 体系骨架</a></li>
+      <li><a href="../WEAPONS.md">WEAPONS 武器正文</a></li>
+      <li><a href="../NUMBERS.md">NUMBERS 数值细则</a></li>
+      <li><a href="../DECISIONS.md">DECISIONS 决策日志</a></li>
+    </ul>
+  </nav>
+  <p class="pedia-note">本维基条目为规划文档的「机制纲要版」——结构不写死、数值一律以 NUMBERS 原文为准。</p>
+</aside>
+
+<main class="main">
+<article class="article">
+<h1 class="article-title">属性盘 <span class="subtitle">五维坐标 · 六核圆盘</span></h1>
+
+<p class="hatnote"><b>本文介绍的是属性盘</b>——游戏内五维属性的几何坐标盘。武器的分区落位见 <a href="weapon-ring.html">武器圆环</a>；结构镜像但内容无关的元素体系见 <a href="element-ring.html">元素环</a>。依据 <a href="../SYSTEMS.md">SYSTEMS v0.10</a> 整理。</p>
+
+<div class="infobox">
+  <div class="ib-title">属性盘</div>
+  <table>
+    <tr><td class="k">体系类型</td><td class="v">色环 · 圆盘坐标</td></tr>
+    <tr><td class="k">三原色</td><td class="v">力 / 敏 / 智</td></tr>
+    <tr><td class="k">六核</td><td class="v">3 原色 + 3 混合色<span class="sub">混合核 = 相邻原色弧中点</span></td></tr>
+    <tr><td class="k">轴外坐标</td><td class="v">VIT 体质（生命·抗性）/ AGI 灵巧（闪避）<span class="sub">不入扇区，是盘外坐标轴</span></td></tr>
+    <tr><td class="k">三直径</td><td class="v">AGI 敏捷直径 · VIT 力量直径 · INT 智慧直径</td></tr>
+    <tr><td class="k">职业定位</td><td class="v">12 职 = 六核 × 近/远家族<span class="sub">见 <a href="weapons.html">武器系统</a></span></td></tr>
+    <tr><td class="k">数值细则</td><td class="v"><a href="../NUMBERS.md">NUMBERS</a> §3~§4</td></tr>
+    <tr><td class="k">决策沿革</td><td class="v">SYSTEMS v0.8~v0.10</td></tr>
+  </table>
+</div>
+
+<h2 id="outline">1. 概述</h2>
+<p>所有体系在大脑中按<b>圆盘 / 坐标</b>构思，规则随位置可推导——这就是「几何定位法」。属性盘以此承载<b>五维</b>：三原色力 / 敏 / 智是盘上的色块，体质 VIT 与灵巧 AGI 是盘外的坐标轴。</p>
+
+<svg class="diagram" width="920" height="900" viewBox="0 0 900 900" role="img" aria-label="属性盘六核示意图">
+  <!-- 六扇区（几何与武器圆环同构）：
+       力=正上 0°（12点）· 智=右下 120°（≈4:30）· 敏=左下 240°（≈7:30）
+       混合核=相邻原色弧中点：力智=60° · 敏智=180° · 力敏=300° -->
+  <!-- 力 -->
+  <path d="M 260,121 A 380,380 0 0 1 640,120 L 535,303 A 170,170 0 0 0 365,303 Z" fill="#c0392b" fill-opacity="0.15" stroke="#c0392b" stroke-width="2"/>
+  <!-- 力智 · 混合 -->
+  <path d="M 640,120 A 380,380 0 0 1 830,450 L 620,450 A 170,170 0 0 0 535,303 Z" fill="#8e44ad" fill-opacity="0.10" stroke="#8e44ad" stroke-width="2"/>
+  <!-- 智 -->
+  <path d="M 830,450 A 380,380 0 0 1 640,780 L 535,597 A 170,170 0 0 0 620,450 Z" fill="#2980b9" fill-opacity="0.15" stroke="#2980b9" stroke-width="2"/>
+  <!-- 敏智 · 混合 -->
+  <path d="M 640,780 A 380,380 0 0 1 260,780 L 365,597 A 170,170 0 0 0 535,597 Z" fill="#16a085" fill-opacity="0.10" stroke="#16a085" stroke-width="2"/>
+  <!-- 敏 -->
+  <path d="M 260,780 A 380,380 0 0 1 70,450 L 280,450 A 170,170 0 0 0 365,597 Z" fill="#27ae60" fill-opacity="0.15" stroke="#27ae60" stroke-width="2"/>
+  <!-- 力敏 · 混合 -->
+  <path d="M 70,450 A 380,380 0 0 1 260,120 L 365,303 A 170,170 0 0 0 280,450 Z" fill="#a8850e" fill-opacity="0.10" stroke="#a8850e" stroke-width="2"/>
+
+  <!-- 三条直径：VIT 力量直径（纵）/ AGI 敏捷直径（过敏点）/ INT 智慧直径（过智点）-->
+  <line x1="450" y1="68" x2="450" y2="832" stroke="#a8442a" stroke-width="2" stroke-dasharray="8 5" opacity="0.55"/>
+  <line x1="119" y1="641" x2="781" y2="259" stroke="#a8442a" stroke-width="2" stroke-dasharray="3 6" opacity="0.55"/>
+  <line x1="119" y1="259" x2="781" y2="641" stroke="#a8442a" stroke-width="2" stroke-dasharray="2 4" opacity="0.55"/>
+
+  <text x="474" y="238" class="axis-label">VIT 力量直径</text>
+  <text x="600" y="342" class="axis-label">AGI 敏捷直径</text>
+  <text x="302" y="563" class="axis-label">AGI 敏捷直径</text>
+  <text x="586" y="558" class="axis-label">INT 智慧直径</text>
+  <text x="300" y="384" class="axis-label">INT 智慧直径</text>
+
+  <!-- 外圈轮廓 -->
+  <circle cx="450" cy="450" r="382" fill="none" stroke="#8b6f47" stroke-width="4"/>
+  <circle cx="450" cy="450" r="170" fill="none" stroke="#7d6748" stroke-width="3" stroke-dasharray="6 5"/>
+
+  <!-- 六核标签（外环 r=415）-->
+  <text x="450" y="35" text-anchor="middle" class="ring-title">力</text>
+  <text x="809" y="242" text-anchor="middle" class="ring-title">力智</text>
+  <text x="809" y="658" text-anchor="middle" class="ring-title">智</text>
+  <text x="450" y="865" text-anchor="middle" class="ring-title">敏智</text>
+  <text x="91" y="658" text-anchor="middle" class="ring-title">敏</text>
+  <text x="91" y="242" text-anchor="middle" class="ring-title">力敏</text>
+
+  <!-- 中心原点 -->
+  <circle cx="450" cy="450" r="168" fill="#7d6748" fill-opacity="0.09"/>
+  <text x="450" y="412" text-anchor="middle" class="ring-title">原 点</text>
+  <text x="450" y="448" text-anchor="middle" class="weapon-note">三原色 → 3+3 = 六核</text>
+  <text x="450" y="480" text-anchor="middle" class="weapon-note">VIT · AGI 为轴外坐标</text>
+  <text x="450" y="512" text-anchor="middle" class="weapon-note">12 职落位 = 六核 × 近/远家族</text>
+</svg>
+<p class="figcaption">属性盘 · 六核 + 三直径（虚线；赭红色为轴标签色，非属性色）</p>
+
+<div class="legend">
+  <b>判读</b>：<span class="dot red"></span>力（顶）<span class="dot green"></span>敏（左下）<span class="dot blue"></span>智（右下）｜混合核（弧中点）：<span class="dot olive"></span>力敏 · <span class="dot teal"></span>敏智 · <span class="dot purple"></span>力智
+  ｜ 三条虚线直径（借点引轴）：<b>VIT</b> 借力量直径（过力点·抗性）/ <b>AGI</b> 借敏捷直径（过敏点·命闪对偶）/ <b>INT</b> 自引智慧直径（过智点·法术分型）
+  ｜ 圆心 = 两生存轴原点；<b>VIT / AGI 不入扇区</b>，是盘外的坐标轴。
+</div>
+
+<h2 id="six">2. 三原色与六核</h2>
+<table class="wikitable">
+  <tr><th>核</th><th>色</th><th>几何落位</th><th>一句话定位</th></tr>
+  <tr><td>纯力</td><td><span class="dot red"></span>红</td><td>力点（正上 12 点）</td><td>物理直击 · 双抗均衡</td></tr>
+  <tr><td>纯敏</td><td><span class="dot green"></span>绿</td><td>敏点（左下 ≈7:30）</td><td>特效/持续 · 物抗为主</td></tr>
+  <tr><td>纯智</td><td><span class="dot blue"></span>蓝</td><td>智点（右下 ≈4:30）</td><td>法抗为主 · 直击/特效均衡</td></tr>
+  <tr><td>力敏</td><td><span class="dot olive"></span>橄榄</td><td>弧中点（300°）</td><td>直击为主 · 物抗为主</td></tr>
+  <tr><td>敏智</td><td><span class="dot teal"></span>青</td><td>弧中点（180°）</td><td>特效/持续为主 · 法抗为主</td></tr>
+  <tr><td>力智</td><td><span class="dot purple"></span>紫</td><td>弧中点（60° 跨带）</td><td>直击/特效双给 · 双抗都加</td></tr>
+</table>
+<p>十二职业 <b>全部</b> 走六核的盘上坐标，家族轴（近/远 / VIT / AGI）外置——详见 <a href="weapons.html">武器系统</a> 与 NUMBERS §3.2。</p>
+
+<h2 id="diameters">3. 三条直径（转出规则）</h2>
+<p>三条直径均画<b>过圆心</b>，把盘切成两个半区。半区归属决定该属性的<b>转出倾斜</b>：<em>轴上的点（原色点）双重给，半区内的点单边给。</em></p>
+
+<h3 id="terms">3.0 术语澄清：点 · 直径 · 轴外</h3>
+<p>盘上有两套各管各个的东西：<b>点（色位）</b>回答「你是做什么的」——职业身份；<b>直径</b>回答「按哪个半区转出」——分型账。两者不是一回事：</p>
+<table class="wikitable">
+  <tr><th>属性</th><th>色位（身份）</th><th>直径（转出分型）</th><th>一言以蔽之</th></tr>
+  <tr><td>INT 智力</td><td>智核（智点）</td><td>智慧直径 = <b>自家点引自家直径</b></td><td><b>双重身份</b>：法术既是身份，又要内部直击↔特效分型</td></tr>
+  <tr><td>VIT 体质</td><td>无（接受端）</td><td>转出分型<b>借用</b>过力点的「力量直径」</td><td>单重身份：只有减免数值 + 借半区定倾斜</td></tr>
+  <tr><td>AGI 灵巧</td><td>无（接受端）</td><td>转出分型<b>借用</b>过敏点的「敏捷直径」</td><td>单重身份：同上</td></tr>
+</table>
+<p><b>命名陷阱</b>：三根直径不是「XX 属性的直径」，而是「从某原色点引出的直径」——力量直径过力点（STR）、敏捷直径过敏点（DEX）、智慧直径过智点（INT）。VIT / AGI 是「借邻家点的直径」切半区；INT 是唯一「自点自引」的：法术侧要切的两半（力量侧/敏捷侧）恰是它自己要分账的两端，拆不开。</p>
+<p>VIT / AGI 为什么没有色位：它们是<b>接受端</b>（挨打时怎么减免），不定义「你是什么职业」——人人都有体质与灵巧，只需要大小即可；转出倾斜由职业落位（力侧/智侧…）代为决定。这就是「轴外坐标」的准确含义：<b>盘上无身份，盘外有数值</b>。</p>
+
+<h3 id="agi">3.1 AGI 敏捷直径（命中 / 闪避对偶）</h3>
+<p>从<b>敏捷点</b>过圆心画直径 → 分<b>力量侧</b>（含力）/ <b>智慧侧</b>（含智）。命中与闪避是相生相对的对偶属性、<strong>同在一条轴上</strong>：每半区承载该极的命中 + 闪避两力。</p>
+<table class="wikitable">
+  <tr><th>核</th><th>几何落位</th><th>命中转出（细）</th><th>闪避转出（细）</th></tr>
+  <tr><td>纯力</td><td>力点</td><td>物理桶 = DEX×10 + STR×5；法术桶 = DEX×10</td><td>物 100 / 法 0</td></tr>
+  <tr><td>纯敏</td><td>敏点（在轴上）</td><td>两桶都 = DEX×10（但 DEX 自身最高）</td><td>物 50 / 法 50</td></tr>
+  <tr><td>纯智</td><td>智点</td><td>法术桶 = DEX×10 + INT×5；物理桶 = DEX×10</td><td>物 0 / 法 100</td></tr>
+  <tr><td>桥位（力敏/敏智/力智）</td><td>弧中点</td><td>待定（M2 同批定比值——主属性×5 的折扣系数）</td><td>物 70 / 法 30（暂定）</td></tr>
+</table>
+<p class="note"><b>转出机制（#3 Q5 定稿）</b>：物理攻击值 = DEX×10 + STR×5；法术攻击值 = DEX×10 + INT×5；闪避值 = AGI×10 按上表分桶；命中率 = min(100%, max(5%, 攻击值 / (攻击值 + 敌方闪避值)))。完整规格见 NUMBERS §4.1。</p>
+
+<h3 id="vit">3.2 VIT 力量直径（抗性转出）</h3>
+<p>从<b>力量点</b>过圆心画直径（纵轴）→ 分<b>敏捷侧</b>（含敏）/ <b>智慧侧</b>（含智）。VIT 出<b>物理抗性 / 法术抗性</b>（属性端减免），力点在轴上 → <b>双抗都给</b>。</p>
+<table class="wikitable">
+  <tr><th>核</th><th>几何落位</th><th>抗性转出</th></tr>
+  <tr><td>纯力</td><td>力点（在轴上）</td><td>双抗均衡（微偏物？M2）</td></tr>
+  <tr><td>纯敏</td><td>敏点</td><td>物理抗性为主</td></tr>
+  <tr><td>纯智</td><td>智点</td><td>法术抗性为主</td></tr>
+  <tr><td>力敏</td><td>弧中点</td><td>物理抗性为主</td></tr>
+  <tr><td>敏智</td><td>弧中点</td><td>法术抗性为主</td></tr>
+  <tr><td>力智</td><td>弧中点（跨带）</td><td>双抗都加且多</td></tr>
+</table>
+<p class="note"><b>抗性公式（#3 Q6 定稿）</b>：抗性率 = 1 − K_抗/(K_抗+VIT)，与护甲 <code>1−K_甲/(K_甲+总护甲)</code> <strong>数学同构</strong>（A/(A+B) 饱和族）；K_抗 = 300（50% 转折锚，固定）；75% = 硬上限（封天赋/词缀百分点）；天赋/词缀百分点全额线性（不递减）。</p>
+<p class="note"><b>与 AGI 轴的同族数学</b>：AGI 闪避纲要 <code>AGI/(AGI+敌方命中)</code> 同为 A/(A+B) 饱和形——生存对两条轴归一。锚点差异：VIT 侧固定（保底减免，近战稳）；AGI 侧锚 = 敌方命中（随内容涨，闪避衰减，远程赌）。</p>
+
+<h3 id="int">3.3 INT 智慧直径（法术直击 ↔ 特效）</h3>
+<p>从<b>智慧点</b>过圆心画直径 → 分<b>力量侧</b>（含力）/ <b>敏捷侧</b>（含敏）。INT 出<b>法术伤害加成</b> + 法术转出对：<b>直击 vs 特效（持续）</b>——力量侧直击高，敏捷侧持续/状态高，智点（在轴上）双给。</p>
+<table class="wikitable">
+  <tr><th>核</th><th>几何落位</th><th>法术转出</th></tr>
+  <tr><td>纯力</td><td>力点</td><td>直击为主</td></tr>
+  <tr><td>纯敏</td><td>敏点</td><td>特效/持续为主</td></tr>
+  <tr><td>纯智</td><td>智点（在轴上）</td><td>双给均衡</td></tr>
+  <tr><td>力敏</td><td>弧中点</td><td>直击为主</td></tr>
+  <tr><td>敏智</td><td>弧中点</td><td>特效/持续为主</td></tr>
+  <tr><td>力智</td><td>弧中点（跨带）</td><td>双给且多</td></tr>
+</table>
+<p class="note">机制因果：元素伤害会产生特效（PoE 式：法术元素伤害挂状态/持续）；特效类吃哪套加成由落位决定。三轴分别为——AGI（闪避概率层）/ VIT（抗性减免层）/ INT（法术直击↔特效），交点 = 圆心 = 两个维度的原点。</p>
+
+<h2 id="outside">4. 轴外坐标（家族轴）</h2>
+<p>VIT（体质）与 AGI（灵巧）作为<b>生存对</b>出现在盘外坐标轴上：VIT 管生命与抗性（减免层），AGI 管闪避（概率层）。它们<b>不具备色位</b>——不定义职业身份、只有数值大小，其转出倾斜由职业落位代答（借直径切半区，见 <a href="#terms">术语澄清</a>）。与命中/闪避、护甲的关系见 <a href="combat.html">战斗体系</a>。</p>
+
+<h2 id="see">参见</h2>
+<div class="seealso">
+  <ul>
+    <li><a href="element-ring.html">元素环</a> — 与属性盘<b>同构</b>的色环：结构一致，内容无关（火雷 ≠ 力敏）</li>
+    <li><a href="weapon-ring.html">武器圆环</a> — 属性大圆的<b>武器分区</b>：六核 × 12 类武器</li>
+    <li><a href="combat.html">战斗体系</a> — 三直径转出是伤害/命闪/防御的输入端</li>
+  </ul>
+  <span class="note">依据：<a href="../SYSTEMS.md">SYSTEMS §0~§2</a> · 数值：<a href="../NUMBERS.md">NUMBERS §3~§4</a></span>
+</div>
+
+<div class="catlinks"><b>分类</b><a href="index.html">属性体系</a><a href="combat.html">战斗体系</a><a href="weapon-ring.html">武器圆环</a></div>
+
+<footer class="site-footer">
+  属性盘 · 依据 SYSTEMS v0.10 · 本页同步于 M2 开发期
+</footer>
+</article>
+</main>
+</div>
+</body>
+</html>

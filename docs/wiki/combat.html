@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>战斗体系 · 挂机远征设定维基</title>
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<div class="wiki-layout">
+<aside class="sidebar">
+  <a class="logo" href="index.html">
+    <span class="seal">远征</span>
+    <span class="site-name">挂机远征<span class="site-sub">SETTING WIKI</span></span>
+  </a>
+  <nav>
+    <h3>词条</h3>
+    <ul>
+      <li><a href="index.html">首页</a></li>
+      <li><a href="attribute-disc.html">属性盘</a></li>
+      <li><a href="element-ring.html">元素环</a></li>
+      <li><a href="combat.html" class="here">战斗体系</a></li>
+      <li><a href="weapons.html">武器系统</a></li>
+      <li><a href="weapon-ring.html">武器圆环</a></li>
+      <li><a href="heroes.html">英雄系统</a>
+        <ul class="subnav">
+          <li><a href="roster.html">英雄图鉴</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>规划文档</h3>
+    <ul>
+      <li><a href="../GDD.md">GDD 游戏设计</a></li>
+      <li><a href="../SYSTEMS.md">SYSTEMS 体系骨架</a></li>
+      <li><a href="../WEAPONS.md">WEAPONS 武器正文</a></li>
+      <li><a href="../NUMBERS.md">NUMBERS 数值细则</a></li>
+      <li><a href="../DECISIONS.md">DECISIONS 决策日志</a></li>
+    </ul>
+  </nav>
+  <p class="pedia-note">本维基条目为规划文档的「机制纲要版」——结构不写死、数值一律以 NUMBERS 原文为准。</p>
+</aside>
+
+<main class="main">
+<article class="article">
+<h1 class="article-title">战斗体系 <span class="subtitle">两极 · 双维 · 分层防御</span></h1>
+
+<p class="hatnote"><b>本文介绍的是战斗体系</b>——伤害、命中/闪避、防御三大块的结构。属性转出规则见 <a href="attribute-disc.html">属性盘 §3</a>；法术极的元素基准见 <a href="element-ring.html">元素环</a>。依据 <a href="../SYSTEMS.md">SYSTEMS v0.10 §4~§8</a> 整理。</p>
+
+<div class="infobox">
+  <div class="ib-title">战斗体系</div>
+  <table>
+    <tr><td class="k">伤害维度</td><td class="v">极（物理/法术）<span class="sub">× 层（直接/衍生）× 真伤（无视减免）</span></td></tr>
+    <tr><td class="k">命闪对抗</td><td class="v">两套独立<span class="sub">物理命中 vs 物理闪避 · 法术命中 vs 法术闪避</span></td></tr>
+    <tr><td class="k">防御分层</td><td class="v">属性端（VIT/AGI 转出）<span class="sub">+ 装备端（护甲 / 元素抗）</span></td></tr>
+    <tr><td class="k">公式族</td><td class="v">A/(A+B) 饱和族<span class="sub">护甲/抗性/命中/闪避同构</span></td></tr>
+    <tr><td class="k">定稿状态</td><td class="v">骨架定稿 · 数值 M2 配套</td></tr>
+    <tr><td class="k">数值细则</td><td class="v"><a href="../NUMBERS.md">NUMBERS</a> §4</td></tr>
+  </table>
+</div>
+
+<h2 id="damage">1. 伤害（两极 · 两维：极 × 层）</h2>
+<p>伤害的第一个维度是<b>极</b>（物理 / 法术），第二个维度是<b>层</b>（直接层 / 衍生层）；<b>真伤</b>是「无视减免」的独立属性位，可与任意极、任意层正交生效。</p>
+
+<h3>第一层 · 直接层（命中伤的产物）</h3>
+<table class="wikitable">
+  <tr><th>极</th><th>基准</th><th>本极真伤</th></tr>
+  <tr><td>物理极</td><td>物理基准（武器基准伤害 → 护甲减伤基准线）</td><td>物理真伤（如流血/割裂：无视护甲）</td></tr>
+  <tr><td>法术极</td><td>元素基准（<a href="element-ring.html">元素环</a>：一层 6 型 + 二层毒/奥术）</td><td>法术真伤（元素真伤：无视元素抗性，如湮灭炮）</td></tr>
+</table>
+
+<h3>第二层 · 衍生层（由直击派生的特效/持续伤害）</h3>
+<p>直击命中 → 触发<b>特效/持续伤害</b>：灼烧（火）/ 感电（雷）/ 缓滞（冰）/ 毒（DoT）/ 割裂（流血）等。衍生物<b>吃「特效/持续」套加成</b>、不吃直击套——两套加成按落位分配（见 <a href="attribute-disc.html#int">INT 智慧直径</a>）。</p>
+<p class="note"><b>真伤与层级正交</b>：真伤 = 极内「无视减免」属性，可直接/衍生任意形态生效——流血 = 物理真伤 × 衍生：每跳无视护甲。</p>
+
+<h2 id="combat">2. 命中 / 闪避（两极 · 两套独立对抗）</h2>
+<pre>物理攻击：物理命中 vs 物理闪避
+法术攻击：法术命中 vs 法术闪避
+（两套独立的「命中力 vs 闪避力」对抗，按极分账）</pre>
+<ul class="clean">
+  <li>闪避来源：AGI 转出（随职业落位，<a href="attribute-disc.html#agi">属性盘 §3.1</a>）+ 家族轴 AGI 上浮（远程，NUMBERS §3.2）。</li>
+  <li>命中与闪避是<b>同轴对偶</b>属性：同在 AGI 直径上，每半区承载该极的两力。</li>
+  <li>待定：闪避对真伤 / 衍生 DoT（流血、中毒）是否生效（M2）。</li>
+</ul>
+
+<h2 id="defense">3. 防御（两极对称 · 属性端 / 装备端分层）</h2>
+<table class="wikitable">
+  <tr><th>来源端</th><th>层</th><th>物理极</th><th>法术极</th></tr>
+  <tr><td rowspan="2"><b>属性端</b>（人物成长）</td><td>减免层·抗性</td><td>物理抗性（VIT 转出）</td><td>法术抗性（VIT 转出）</td></tr>
+  <tr><td>规避层</td><td>物理闪避（AGI 转出）</td><td>法术闪避（AGI 转出）</td></tr>
+  <tr><td rowspan="2"><b>装备端</b>（词缀/基底）</td><td>减免层</td><td>护甲（减伤公式已成）</td><td><b>元素抗——按色环细分</b>：火抗 / 雷抗 / 冰抗（双元素混合抗细则 M2）</td></tr>
+  <tr><td>特殊（推导型，不占独立词缀位）</td><td>—</td><td><b>毒抗 = 全部元素抗的平均</b>；<b>奥抗 = 全部元素抗的总加</b>（上限/曲线 M2）</td></tr>
+</table>
+<ul class="clean">
+  <li>属性端（VIT/AGI 转出）与装备端（护甲/元素抗）<b>不同来源、分层共存</b>；合算方式（相乘/分段叠加）M2 定。</li>
+  <li><b>真伤天然穿透两端减免</b>（§1 定义保证）。</li>
+</ul>
+
+<h2 id="formulas">4. 公式骨架（占位 · M2 定稿）</h2>
+<pre>命中率   = 攻击力/(攻击力 + 敌方闪避)          （两套：物理/法术各算，需按极拆）
+闪避率   = AGI/(AGI + 敌方命中)               （两套，AGI 转出随落位，§2.1）
+物理伤害 = 武器命中区间 × (1+STR/100) × (1+Σ增伤%) × 命中修正
+减伤     = 1 - 300/(300 + 总护甲)             （护甲=装备端；元素抗同理）
+抗性     = VIT 转出（物抗/法抗，随落位 §2.2）——属性端；装备端×属性端合算 M2 定</pre>
+
+<h2 id="pending">5. 待细节点（M2 战斗公式定稿配套）</h2>
+<ul class="clean">
+  <li>元素抗曲线公式（是否与护甲同构、同软上限）。</li>
+  <li>双元素（混合色）抗性推导；毒抗「平均」、奥抗「总加」的具体数值口径与上限。</li>
+  <li>属性端（VIT 抗性）与装备端（护甲/元素抗）的合算公式；抗性软上限。</li>
+  <li>闪避对真伤/DoT 是否生效；命中/闪避按极拆后的数值校准。</li>
+</ul>
+<p class="warn"><b>占位声明</b>：§4 公式骨架为结构性占位，M2 定稿前不承诺式样与数值。</p>
+
+<h2 id="see">参见</h2>
+<div class="seealso">
+  <ul>
+    <li><a href="attribute-disc.html">属性盘</a> — 伤害/命闪/防御的输入端：三直径转出</li>
+    <li><a href="element-ring.html">元素环</a> — 法术极基准 + 元素抗细分</li>
+    <li><a href="weapons.html">武器系统</a> — 物理基准（武器伤害）与词缀增减伤</li>
+  </ul>
+  <span class="note">依据：<a href="../SYSTEMS.md">SYSTEMS §4~§8</a> · 公式：<a href="../NUMBERS.md">NUMBERS §4</a></span>
+</div>
+
+<div class="catlinks"><b>分类</b><a href="index.html">战斗体系</a><a href="attribute-disc.html">属性体系</a></div>
+
+<footer class="site-footer">
+  战斗体系 · 依据 SYSTEMS v0.10 · 公式 M2 定稿中
+</footer>
+</article>
+</main>
+</div>
+</body>
+</html>

@@ -63,12 +63,12 @@ body {
 
 .icon {
   display: inline-block;
-  width: 1.2em;
-  height: 1.2em;
+  width: 1.25em;
+  height: 1.25em;
   background-color: currentColor;
   -webkit-mask: var(--icon) center / contain no-repeat;
   mask: var(--icon) center / contain no-repeat;
-  vertical-align: -0.18em;
+  vertical-align: -0.22em;
 }
 
 .placeholder {

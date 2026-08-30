@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>武器圆环 · 挂机远征设定维基</title>
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<div class="wiki-layout">
+<aside class="sidebar">
+  <a class="logo" href="index.html">
+    <span class="seal">远征</span>
+    <span class="site-name">挂机远征<span class="site-sub">SETTING WIKI</span></span>
+  </a>
+  <nav>
+    <h3>词条</h3>
+    <ul>
+      <li><a href="index.html">首页</a></li>
+      <li><a href="attribute-disc.html">属性盘</a></li>
+      <li><a href="element-ring.html">元素环</a></li>
+      <li><a href="combat.html">战斗体系</a></li>
+      <li><a href="weapons.html">武器系统</a></li>
+      <li><a href="weapon-ring.html" class="here">武器圆环</a></li>
+      <li><a href="heroes.html">英雄系统</a>
+        <ul class="subnav">
+          <li><a href="roster.html">英雄图鉴</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>规划文档</h3>
+    <ul>
+      <li><a href="../GDD.md">GDD 游戏设计</a></li>
+      <li><a href="../SYSTEMS.md">SYSTEMS 体系骨架</a></li>
+      <li><a href="../WEAPONS.md">WEAPONS 武器正文</a></li>
+      <li><a href="../NUMBERS.md">NUMBERS 数值细则</a></li>
+      <li><a href="../DECISIONS.md">DECISIONS 决策日志</a></li>
+    </ul>
+  </nav>
+  <p class="pedia-note">本维基条目为规划文档的「机制纲要版」——结构不写死、数值一律以 NUMBERS 原文为准。</p>
+</aside>
+
+<main class="main">
+<article class="article">
+<h1 class="article-title">武器圆环 <span class="subtitle">属性大圆分区 · 六核环</span></h1>
+
+<p class="hatnote"><b>本文介绍的是武器圆环</b>——武器在<a href="attribute-disc.html">属性盘</a>六核上的分区布局。武器总体机制（词缀/铸造/装备槽）见 <a href="weapons.html">武器系统</a>。依据 <a href="../WEAPONS.md">WEAPONS v0.11</a>（NUMBERS §5.0）整理。</p>
+
+<div class="infobox">
+  <div class="ib-title">武器圆环</div>
+  <table>
+    <tr><td class="k">别名</td><td class="v">六核环</td></tr>
+    <tr><td class="k">类型</td><td class="v">武器分区图<span class="sub">属性大圆的武器落位</span></td></tr>
+    <tr><td class="k">覆盖</td><td class="v">12 类武器 = 单手 4 + 双手 8</td></tr>
+    <tr><td class="k">核归属</td><td class="v">力/敏/智 各 3；三混合核 = 桥位（双形态）</td></tr>
+    <tr><td class="k">通吃（中心）</td><td class="v">单手剑（三倾向）+ 盾（副手大类）</td></tr>
+    <tr><td class="k">版本</td><td class="v">v0.11 · NUMBERS §5.0<span class="sub">结构为基准、数值暂定</span></td></tr>
+  </table>
+</div>
+
+<h2 id="map">1. 环形图</h2>
+<svg class="diagram" width="920" height="900" viewBox="0 0 900 900" role="img" aria-label="武器圆环六核环示意图">
+  <!-- 大圆盘：整圆 r=382，六等分；布局（对 SYSTEMS 属性盘）：
+       力=正上 0°（12点）· 智=右下 120°（≈4:30）· 敏=左下 240°（≈7:30）
+       桥（弧中点）：力智=60° · 敏智=180° · 力敏=300° -->
+
+  <!-- 核标签（外环 r=320）｜ 武器名（r=280）｜ 注释（r=245） 三行均沿扇心线 -->
+
+  <!-- 力（0°）-->
+  <path d="M 260,121 A 380,380 0 0 1 640,120 L 535,303 A 170,170 0 0 0 365,303 Z"
+        fill="#c0392b" fill-opacity="0.13" stroke="#c0392b" stroke-width="2"/>
+  <!-- 力智（60°·桥）-->
+  <path d="M 640,120 A 380,380 0 0 1 830,450 L 620,450 A 170,170 0 0 0 535,303 Z"
+        fill="#8e44ad" fill-opacity="0.13" stroke="#8e44ad" stroke-width="2"/>
+  <!-- 智（120°·右下）-->
+  <path d="M 830,450 A 380,380 0 0 1 640,780 L 535,597 A 170,170 0 0 0 620,450 Z"
+        fill="#2980b9" fill-opacity="0.13" stroke="#2980b9" stroke-width="2"/>
+  <!-- 敏智（180°·桥）-->
+  <path d="M 640,780 A 380,380 0 0 1 260,780 L 365,597 A 170,170 0 0 0 535,597 Z"
+        fill="#16a085" fill-opacity="0.13" stroke="#16a085" stroke-width="2"/>
+  <!-- 敏（240°·左下）-->
+  <path d="M 260,780 A 380,380 0 0 1 70,450 L 280,450 A 170,170 0 0 0 365,597 Z"
+        fill="#27ae60" fill-opacity="0.13" stroke="#27ae60" stroke-width="2"/>
+  <!-- 力敏（300°·桥）-->
+  <path d="M 70,450 A 380,380 0 0 1 260,120 L 365,303 A 170,170 0 0 0 280,450 Z"
+        fill="#a8850e" fill-opacity="0.13" stroke="#a8850e" stroke-width="2"/>
+
+  <!-- 外圈轮廓 -->
+  <circle cx="450" cy="450" r="382" fill="none" stroke="#8b6f47" stroke-width="4"/>
+  <circle cx="450" cy="450" r="170" fill="none" stroke="#7d6748" stroke-width="3" stroke-dasharray="6 5"/>
+
+  <!-- 核节点·武器·注释（沿扇心线排列） -->
+  <!-- 力 0° -->
+  <text x="450" y="35" text-anchor="middle" class="ring-title">力</text>
+  <text x="809" y="242" text-anchor="middle" class="ring-title">力智</text>
+  <text x="809" y="658" text-anchor="middle" class="ring-title">智</text>
+  <text x="450" y="865" text-anchor="middle" class="ring-title">敏智</text>
+  <text x="91" y="658" text-anchor="middle" class="ring-title">敏</text>
+  <text x="91" y="242" text-anchor="middle" class="ring-title">力敏</text>
+
+  <!-- 分区内两行：单手（外行）/ 双手（内行）· 文本带 r=274/232，与桥徽标（r≤225）无碰撞 -->
+  <!-- 力 0° -->
+  <text x="450" y="176" text-anchor="middle" class="slot"><tspan class="slot-pre">单手 </tspan>单手锤</text>
+  <text x="450" y="218" text-anchor="middle" class="slot"><tspan class="slot-pre">双手 </tspan>大锤 · 大剑</text>
+  <!-- 力智 60° -->
+  <text x="687" y="313" text-anchor="middle" class="slot"><tspan class="slot-pre">单手 </tspan>—</text>
+  <text x="651" y="334" text-anchor="middle" class="slot"><tspan class="slot-pre">双手 </tspan>长杖</text>
+  <!-- 智 120° -->
+  <text x="687" y="587" text-anchor="middle" class="slot"><tspan class="slot-pre">单手 </tspan>短杖</text>
+  <text x="651" y="566" text-anchor="middle" class="slot"><tspan class="slot-pre">双手 </tspan>法器</text>
+  <!-- 敏智 180° -->
+  <text x="450" y="724" text-anchor="middle" class="slot"><tspan class="slot-pre">单手 </tspan>—</text>
+  <text x="450" y="682" text-anchor="middle" class="slot"><tspan class="slot-pre">双手 </tspan>匕首</text>
+  <!-- 敏 240° -->
+  <text x="213" y="587" text-anchor="middle" class="slot"><tspan class="slot-pre">单手 </tspan>短刀</text>
+  <text x="249" y="566" text-anchor="middle" class="slot"><tspan class="slot-pre">双手 </tspan>弓 · 弩</text>
+  <!-- 力敏 300° -->
+  <text x="213" y="313" text-anchor="middle" class="slot"><tspan class="slot-pre">单手 </tspan>—</text>
+  <text x="249" y="334" text-anchor="middle" class="slot"><tspan class="slot-pre">双手 </tspan>矛</text>
+
+  <!-- 桥徽标（贴中心小圆外侧 r=188，球 r=22 → 面 166~210，低于文本带 232 → 无碰撞）-->
+  <circle cx="613" cy="356" r="22" fill="#8e44ad"/>
+  <text x="613" y="362" text-anchor="middle" class="bridge">力智桥</text>
+  <circle cx="450" cy="638" r="22" fill="#16a085"/>
+  <text x="450" y="644" text-anchor="middle" class="bridge">敏智桥</text>
+  <circle cx="287" cy="356" r="22" fill="#a8850e"/>
+  <text x="287" y="362" text-anchor="middle" class="bridge">力敏桥</text>
+
+  <!-- 中心：通吃 -->
+  <circle cx="450" cy="450" r="168" fill="#7d6748" fill-opacity="0.10"/>
+  <text x="450" y="380" text-anchor="middle" class="ring-title">通 吃</text>
+  <text x="450" y="427" text-anchor="middle" class="weapon-name">单手剑</text>
+  <text x="450" y="450" text-anchor="middle" class="weapon-note">力=剑气(远程) / 敏=快击 / 智=法刃</text>
+  <text x="450" y="490" text-anchor="middle" class="weapon-name">盾 = 副手大类</text>
+  <text x="450" y="513" text-anchor="middle" class="weapon-note">物盾(力) / 轻盾(敏) / 符盾(智)</text>
+  <text x="450" y="543" text-anchor="middle" class="weapon-note">弹射(纯力远)/结晶(纯智近) = 单手剑＋桥武器</text>
+</svg>
+<p class="figcaption">武器圆环 · 六核环 × 单双手分列（结构为基准，数值暂定）</p>
+
+<h2 id="rules">2. 构成规则</h2>
+<table class="wikitable">
+  <tr><th>位置</th><th>归属</th><th>内容</th></tr>
+  <tr><td><span class="dot red"></span>力核</td><td>单侧</td><td>单手锤 · 大锤 · 大剑</td></tr>
+  <tr><td><span class="dot green"></span>敏核</td><td>单侧</td><td>短刀 · 弓 · 弩</td></tr>
+  <tr><td><span class="dot blue"></span>智核</td><td>单侧</td><td>短杖 · 法器</td></tr>
+  <tr><td><span class="dot olive"></span>力敏（桥）</td><td>弧中点</td><td>矛：近战 ⇄ 投掷（词缀转换）</td></tr>
+  <tr><td><span class="dot teal"></span>敏智（桥）</td><td>弧中点</td><td>匕首：近战 ⇄ 飞掷（词缀转换）</td></tr>
+  <tr><td><span class="dot purple"></span>力智（桥）</td><td>弧中点</td><td>长杖：远程 ⇄ 扫击（词缀转换）</td></tr>
+  <tr><td><span class="dot shield"></span>通吃（中心）</td><td>不属任一核</td><td>单手剑（力=剑气/敏=快击/智=法刃）＋ 盾（物盾/轻盾/符盾）</td></tr>
+</table>
+<p class="note">桥位双形态：条件词缀显性文本转换（「作为远程武器使用时…」），<b>天赋判定走基准族</b>。</p>
+
+<h2 id="hand1">3. 单手武器（4 类 · 可装盾 / 可双持）</h2>
+<div class="cards hand1">
+  <div class="card"><div class="row1"><span class="dot red"></span><h3>单手锤</h3></div>
+    <div class="meta">慢·重 ｜ 物理 · 力侧</div>
+    <div class="flags"><span class="flag">盾 ⊕ 双持</span><span class="flag cn">铁砧/守恒</span></div></div>
+  <div class="card"><div class="row1"><span class="dot red"></span><h3>单手剑（通吃）</h3></div>
+    <div class="meta">中·中 ｜ 物理 · 力/敏/智 顺手（词缀定倾向）</div>
+    <div class="flags"><span class="flag five">通吃</span><span class="flag">盾 ⊕ 双持</span></div></div>
+  <div class="card"><div class="row1"><span class="dot blue"></span><h3>短杖</h3></div>
+    <div class="meta">快·低威·高频 ｜ 法术 · 智侧</div>
+    <div class="flags"><span class="flag">符盾 ⊕ 双持</span><span class="flag cn">脉冲/结晶</span></div></div>
+  <div class="card"><div class="row1"><span class="dot green"></span><h3>短刀</h3></div>
+    <div class="meta">极快·轻 ｜ 物理 · 敏侧</div>
+    <div class="flags"><span class="flag">盾 ⊕ 双持</span><span class="flag cn">流汞</span></div></div>
+</div>
+
+<h2 id="hand2">4. 双手武器（8 类 · 无副手，占两槽）</h2>
+<div class="cards hand2">
+  <div class="card"><div class="row1"><span class="dot red"></span><h3>大锤</h3></div>
+    <div class="meta">极慢·极重 ｜ 物理 · 力侧</div>
+    <div class="flags"><span class="flag cn">铁砧</span></div></div>
+  <div class="card"><div class="row1"><span class="dot red"></span><h3>大剑</h3></div>
+    <div class="meta">中·宽 ｜ 物理 · 力侧</div>
+    <div class="flags"><span class="flag cn">铁砧（宽刃备选）</span></div></div>
+  <div class="card"><div class="row1"><span class="dot olive"></span><h3>矛（桥）</h3><span class="badge">桥</span></div>
+    <div class="meta">中·宽 ｜ 物理 · 力敏 ｜ 近战⇄投掷（词缀转换）</div>
+    <div class="flags"><span class="flag bridge">双形态</span><span class="flag cn">锻刃/旋流</span></div></div>
+  <div class="card"><div class="row1"><span class="dot teal"></span><h3>匕首（桥）</h3><span class="badge">桥</span></div>
+    <div class="meta">快·轻 ｜ 物理 · 敏智 ｜ 毒化⇄飞掷（词缀转换）</div>
+    <div class="flags"><span class="flag bridge">双形态</span><span class="flag cn">雾语/蚀变</span></div></div>
+  <div class="card"><div class="row1"><span class="dot green"></span><h3>弓</h3></div>
+    <div class="meta">极快·速射 ｜ 物理 · 敏侧</div>
+    <div class="flags"><span class="flag cn">矢痕</span></div></div>
+  <div class="card"><div class="row1"><span class="dot green"></span><h3>弩（轻/重形态）</h3></div>
+    <div class="meta">轻弩=极快·低伤 / 重弩=慢·高伤 ｜ 物理 · 敏侧</div>
+    <div class="flags"><span class="flag">形态不拆类型</span><span class="flag cn">矢痕</span></div></div>
+  <div class="card"><div class="row1"><span class="dot blue"></span><h3>法器</h3></div>
+    <div class="meta">慢·咒具重压 ｜ 法术 · 智侧</div>
+    <div class="flags"><span class="flag cn">脉冲</span></div></div>
+  <div class="card"><div class="row1"><span class="dot purple"></span><h3>长杖（桥）</h3><span class="badge">桥</span></div>
+    <div class="meta">慢·高威 ｜ 法术 · 力智 ｜ 远程⇄扫击（词缀转换）</div>
+    <div class="flags"><span class="flag bridge">双形态</span><span class="flag cn">湮灭/守恒</span></div></div>
+</div>
+
+<h2 id="gap">5. 缺口弥补（v0.12）</h2>
+<ul class="clean">
+  <li><b>弹射（纯力远）</b>= 矛（投掷）＋ 单手剑（剑气）。</li>
+  <li><b>结晶（纯智近）</b>= 单手剑（法刃）＋ 匕首（近战）。</li>
+  <li>至此 <b>12 职业零空位</b>——任何职业都能在盘上找到顺手武器。</li>
+</ul>
+
+<div class="legend">
+  图例：力=红(顶) · 力敏=橄榄(左上) · 智=蓝(右下≈4:30) · 敏=绿(左下≈7:30) · 敏智=青(底) · 力智=紫(右上)
+  ｜ 桥=三混合核双形态武器（弧中点；词缀转换跨近/远，天赋判定走基准族）
+  ｜ 通吃（中心）= 单手剑（力=剑气远程 / 敏=快击 / 智=法刃） + 盾（不属任一核）｜ 弹射(纯力远)/结晶(纯智近) = 单手剑＋桥武器
+</div>
+
+<h2 id="see">参见</h2>
+<div class="seealso">
+  <ul>
+    <li><a href="attribute-disc.html">属性盘</a> — 圆环的盘面：六核与三直径</li>
+    <li><a href="weapons.html">武器系统</a> — 12 类清单 · 形态 · 词缀 · 铸造 · 8 装备槽</li>
+    <li><a href="combat.html">战斗体系</a> — 武器伤害 = 物理极基准；形态转换词缀属于「条件向」后缀</li>
+  </ul>
+  <span class="note">依据：<a href="../WEAPONS.md">WEAPONS v0.11~v0.12</a> · 数值：<a href="../NUMBERS.md">NUMBERS §5.0</a></span>
+</div>
+
+<div class="catlinks"><b>分类</b><a href="index.html">武器图鉴</a><a href="weapons.html">装备体系</a><a href="attribute-disc.html">属性体系</a></div>
+
+<footer class="site-footer">
+  武器圆环 v0.11 · NUMBERS §5.0 · 结构为基准、数值暂定 · 已收编入维基
+</footer>
+</article>
+</main>
+</div>
+</body>
+</html>

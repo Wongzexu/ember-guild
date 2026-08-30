@@ -1,0 +1,349 @@
+/* 《挂机远征》设定维基 · 共享样式（Wikipedia Vector 风格 · 纸墨配色） */
+
+:root {
+  --bg: #f0ead9;
+  --paper: #fffdf7;
+  --ink: #211d15;
+  --ink2: #6a5f4d;
+  --hairline: #c9b48c;
+  --line: #8b6f47;
+  --panel: #f6f1e0;
+  --panel2: #efe7d2;
+  --link: #3a4c9a;
+  --link-hover: #24346e;
+  --link-vis: #7953a5;
+  --accent: #8b6f47;
+  --em: #a8442a;
+  /* 属性大圆色 */
+  --red: #c0392b;   --green: #27ae60;  --blue: #2980b9;
+  --olive: #a8850e; --teal: #16a085;   --purple: #8e44ad;
+  --hub: #7d6748;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  font-size: 15.5px;
+  line-height: 1.78;
+}
+
+/* ---------- 布局：左侧栏 + 正文 ---------- */
+.wiki-layout { display: flex; min-height: 100vh; }
+.sidebar {
+  flex: 0 0 236px;
+  padding: 22px 18px 32px;
+  background: var(--panel);
+  border-right: 1px solid var(--hairline);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  margin-bottom: 4px;
+}
+.sidebar .logo .seal {
+  width: 46px; height: 46px;
+  background: #3a2f1e;
+  color: #f3ead6;
+  display: grid; place-items: center;
+  font-size: 15px;
+  letter-spacing: 2px;
+  border-radius: 5px;
+}
+.sidebar .logo .site-name { color: var(--ink); font-weight: 700; font-size: 15px; letter-spacing: 1px; }
+.sidebar .logo .site-sub { display: block; font-size: 11px; font-weight: 400; color: var(--ink2); letter-spacing: 3px; }
+.sidebar nav { margin-top: 14px; }
+.sidebar nav h3 {
+  font-size: 11.5px; letter-spacing: 3px; color: var(--ink2);
+  margin: 18px 0 6px; text-transform: uppercase;
+}
+.sidebar ul { list-style: none; margin: 0; padding: 0; }
+.sidebar li { margin: 2px 0; }
+.sidebar ul.subnav { padding-left: 13px; }
+.sidebar ul.subnav li a { font-size: 13px; color: var(--ink2); }
+.sidebar li a {
+  display: block; padding: 3px 6px; border-radius: 3px;
+  font-size: 14px; color: var(--ink);
+  text-decoration: none;
+}
+.sidebar li a:hover { background: var(--panel2); color: var(--link-hover); }
+.sidebar li a.here { font-weight: 700; color: var(--em); }
+.sidebar .pedia-note { margin-top: 22px; font-size: 12.5px; color: var(--ink2); line-height: 1.6; }
+.sidebar .pedia-note a { font-size: 12.5px; }
+
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+.article {
+  width: 100%;
+  max-width: 968px;
+  padding: 26px 44px 40px;
+  background: var(--paper);
+  border-left: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
+}
+
+/* ---------- 通用链接 ---------- */
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; }
+a:visited { color: var(--link-vis); }
+a.blank { color: var(--em); }
+
+/* ---------- 标题 ---------- */
+h1.article-title {
+  font-size: 26px;
+  letter-spacing: 1px;
+  margin: 0 0 2px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--line);
+}
+h1.article-title .subtitle { font-size: 14px; color: var(--ink2); letter-spacing: 4px; margin-left: 10px; font-weight: 400; }
+h2 {
+  font-size: 19px;
+  margin: 36px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--hairline);
+  letter-spacing: 1px;
+  scroll-margin-top: 16px;
+}
+h3 { font-size: 16.5px; margin: 24px 0 8px; letter-spacing: 0.5px; }
+h4 { font-size: 15px; margin: 18px 0 6px; }
+p { margin: 10px 0; }
+
+/* ---------- 提示条 ---------- */
+.hatnote {
+  font-size: 13.5px;
+  color: var(--ink2);
+  border-left: 3px solid var(--accent);
+  background: var(--panel);
+  padding: 8px 12px;
+  margin: 14px 0;
+  line-height: 1.6;
+}
+.hatnote b { color: var(--em); }
+.warn {
+  border: 1px dashed var(--line);
+  background: #fbf3dd;
+  padding: 10px 14px;
+  margin: 14px 0;
+  font-size: 14px;
+}
+.warn b { color: var(--em); }
+.note { font-size: 12.5px; color: var(--ink2); }
+
+/* ---------- 目录 ---------- */
+.tocbox {
+  display: inline-block;
+  border: 1px solid var(--hairline);
+  background: var(--panel);
+  padding: 10px 18px 12px;
+  margin: 14px 0 8px;
+  min-width: 230px;
+}
+.tocbox .toc-title { text-align: center; font-size: 13px; letter-spacing: 4px; color: var(--ink2); padding-bottom: 6px; }
+.tocbox a { font-size: 14px; }
+.tocbox ul { margin: 0; padding-left: 16px; }
+.tocbox li { margin: 2px 0; }
+.tocbox .lvl2 { padding-left: 14px; }
+.tocbox { float: none; }
+@media (min-width: 1024px) {
+  .tocbox { float: right; margin: 14px 0 14px 22px; }
+}
+
+/* ---------- 信息框 ---------- */
+.infobox {
+  float: right;
+  width: 300px;
+  margin: 6px 0 16px 22px;
+  border: 1px solid var(--hairline);
+  background: var(--panel);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+.infobox .ib-title {
+  background: var(--line);
+  color: #fbf3dd;
+  text-align: center;
+  padding: 7px 10px;
+  font-size: 14.5px;
+  letter-spacing: 2px;
+}
+.infobox table { width: 100%; border-collapse: collapse; }
+.infobox td { padding: 5px 12px; border-top: 1px solid var(--hairline); vertical-align: top; }
+.infobox td.k { width: 34%; color: var(--ink2); white-space: nowrap; }
+.infobox td.v { color: var(--ink); font-weight: 700; }
+.infobox td.v .sub { display: block; font-weight: 400; font-size: 12px; color: var(--ink2); }
+.infobox a { font-weight: 400; }
+@media (max-width: 860px) {
+  .infobox { float: none; width: auto; margin: 14px 0; }
+  .tocbox { float: none; width: auto; }
+  .article { padding: 20px 16px 32px; }
+  .sidebar { position: static; height: auto; flex-basis: auto; border-right: none; border-bottom: 1px solid var(--hairline); }
+  .wiki-layout { display: block; }
+  .sidebar nav { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .sidebar nav h3 { display: none; }
+  .sidebar nav ul { display: contents; }
+  .sidebar .pedia-note { display: none; }
+}
+
+/* ---------- 表格 ---------- */
+table.wikitable { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px; }
+table.wikitable th, table.wikitable td { border: 1px solid var(--hairline); padding: 6px 10px; text-align: left; vertical-align: top; }
+table.wikitable th { background: var(--panel2); color: var(--ink); font-weight: 700; }
+table.wikitable tr:nth-child(even) td { background: #fbf7ec; }
+table.wikitable td.center, table.wikitable th.center { text-align: center; }
+
+/* 小色点 */
+.dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; vertical-align: middle; margin-right: 6px; }
+.dot.red { background: var(--red); } .dot.green { background: var(--green); } .dot.blue { background: var(--blue); }
+.dot.olive { background: var(--olive); } .dot.teal { background: var(--teal); } .dot.purple { background: var(--purple); }
+.dot.fire { background: #c6432b; } .dot.thunder { background: #d9a405; } .dot.ice { background: #2e86c1; }
+.dot.firered { background: #d9772f; } .dot.fireice { background: #9950a8; } .dot.thunderice { background: #3f9e97; }
+.dot.poison { background: #6a7c24; } .dot.arcane { background: #6c5ce7; } .dot.shield { background: var(--hub); }
+
+/* ---------- 卡片（武器清单复用） ---------- */
+.cards { display: grid; gap: 12px; margin: 14px 0; }
+.hand1 { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.hand2 { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.card {
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 12px 14px;
+  position: relative;
+}
+.card .row1 { display: flex; align-items: center; gap: 10px; }
+.card h3 { margin: 0; font-size: 16.5px; }
+.card .meta { font-size: 13.5px; color: var(--ink2); margin-top: 6px; line-height: 1.6; }
+.card .flags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
+.flag {
+  font-size: 12px; padding: 2px 9px; border-radius: 20px;
+  background: #eee3cc; color: var(--ink2); border: 1px solid var(--hairline);
+}
+.flag.bridge { background: #e8d9f5; color: #6d3d86; border-color: #c9a7e3; }
+.flag.five { background: #d9e8f5; color: #2c5d86; border-color: #a7c3e3; }
+.flag.cn { background: #e8d9d9; color: #86333d; border-color: #e3a7aa; }
+.flag.dual { background: #e8f0d9; color: #51652d; border-color: #b9cc93; }
+.badge {
+  position: absolute; top: -9px; right: 12px;
+  font-size: 11px; padding: 2px 10px; border-radius: 20px;
+  background: var(--ink); color: var(--paper);
+}
+
+/* ---------- SVG 图 ---------- */
+svg.diagram { display: block; margin: 12px auto; max-width: 100%; height: auto; }
+svg text { font-family: inherit; }
+.ring-title { fill: var(--ink); font-size: 26px; font-weight: 700; letter-spacing: 2px; }
+.slot { font-size: 17px; font-weight: 700; }
+.slot-pre { fill: var(--ink2); font-size: 13px; font-weight: 700; }
+.weapon-name { fill: var(--ink); font-size: 19px; font-weight: 700; }
+.weapon-note { fill: var(--ink2); font-size: 13px; }
+.bridge { fill: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+.axis-label { fill: var(--em); font-size: 13px; font-weight: 700; letter-spacing: 1px; }
+.axis-sub { fill: var(--ink2); font-size: 10.5px; }
+.gen-title { fill: var(--ink); font-size: 23px; font-weight: 700; letter-spacing: 2px; }
+
+.legend { font-size: 13.5px; color: var(--ink2); margin-top: 10px; line-height: 1.9; }
+.legend b { color: var(--ink); }
+
+/* ---------- 引文卡（英雄立传等） ---------- */
+.quotebox {
+  border-left: 4px solid var(--em);
+  background: var(--panel);
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 14.5px;
+  line-height: 1.9;
+}
+.quotebox .q-note { font-size: 13px; color: var(--ink2); margin-top: 8px; }
+
+/* ---------- 英雄卡（英雄图鉴 · 单英雄信息页卡） ---------- */
+.herosheet { border: 1px solid var(--hairline); background: var(--paper); margin: 16px 0 28px; }
+.hs-head {
+  background: var(--line);
+  color: #fbf3dd;
+  padding: 8px 16px;
+  font-size: 16px;
+  letter-spacing: 2px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: baseline;
+}
+.hs-head .hs-role { font-size: 12.5px; color: #f3ead6; letter-spacing: 1px; font-weight: 400; }
+.hs-grid { display: grid; grid-template-columns: 1.6fr 1fr; }
+.hs-flavor {
+  padding: 16px 18px;
+  border-right: 1px solid var(--hairline);
+  line-height: 1.9;
+  font-size: 14.5px;
+}
+.hs-data { background: var(--panel); }
+.hs-data table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.hs-data td { padding: 7px 12px; border-top: 1px solid var(--hairline); vertical-align: top; }
+.hs-data td.k { width: 34%; color: var(--ink2); white-space: nowrap; }
+.hs-data td.v { font-weight: 700; color: var(--ink); }
+.hs-data td.v .sub, .hs-data td.v .sp { display: block; font-weight: 400; font-size: 12px; color: var(--ink2); margin-top: 2px; }
+@media (max-width: 860px) {
+  .hs-grid { grid-template-columns: 1fr; }
+  .hs-flavor { border-right: none; border-bottom: 1px solid var(--hairline); }
+}
+
+/* ---------- 子词条目录（母词条内） / 面包屑 ---------- */
+.subpages {
+  border: 1px solid var(--hairline);
+  background: var(--panel);
+  padding: 10px 14px;
+  margin: 14px 0;
+  font-size: 14px;
+}
+.subpages .sp-title { font-size: 12px; letter-spacing: 3px; color: var(--ink2); margin-bottom: 4px; }
+.subpages ul { margin: 0; padding-left: 20px; }
+.subpages li { margin: 2px 0; }
+.crumb { font-size: 12.5px; color: var(--ink2); margin: 4px 0 6px; }
+.crumb a { font-size: 12.5px; }
+.crumb b { color: var(--ink); font-weight: 400; }
+
+/* ---------- 参见 / 分类 / 页脚 ---------- */
+.seealso { border: 1px solid var(--hairline); background: var(--panel); padding: 12px 16px; margin: 18px 0; }
+.seealso h2 { border: none; margin: 0 0 6px; padding: 0; font-size: 16px; letter-spacing: 3px; color: var(--ink2); }
+.seealso ul { margin: 0; padding-left: 20px; }
+.seealso li { margin: 3px 0; }
+.seealso .note { display: block; margin-top: 6px; }
+
+.catlinks {
+  border: 1px solid var(--hairline);
+  background: var(--panel);
+  padding: 7px 14px;
+  margin-top: 26px;
+  font-size: 13px;
+}
+.catlinks b { color: var(--ink2); margin-right: 6px; letter-spacing: 2px; }
+.catlinks a { margin-right: 12px; }
+
+.site-footer {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--ink2);
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--hairline);
+}
+.site-footer a { color: var(--ink2); }
+
+/* 列表 */
+ul.clean { padding-left: 20px; }
+.figcaption { text-align: center; font-size: 13px; color: var(--ink2); margin: 4px 0 18px; }

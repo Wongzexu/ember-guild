@@ -1,0 +1,248 @@
+{
+  "regions": [
+    {
+      "key": "mist-fringe",
+      "name": "迷雾边缘",
+      "levelRange": [
+        1,
+        15
+      ],
+      "xp": 20,
+      "monster": {
+        "hp": [
+          15,
+          60
+        ],
+        "dmg": [
+          2,
+          8
+        ],
+        "dodgeTiers": [
+          "white"
+        ]
+      },
+      "gold": [
+        1,
+        4
+      ],
+      "unlock": {
+        "orgLevel": 1,
+        "heroLevel": 1
+      },
+      "loot": [
+        "金币",
+        "白装(M2)",
+        "普通英雄线索(M2+)"
+      ]
+    },
+    {
+      "key": "gloom-woods",
+      "name": "幽暗林地",
+      "levelRange": [
+        15,
+        30
+      ],
+      "xp": 45,
+      "monster": {
+        "hp": [
+          70,
+          160
+        ],
+        "dmg": [
+          10,
+          20
+        ],
+        "dodgeTiers": [
+          "white"
+        ]
+      },
+      "gold": [
+        2,
+        8
+      ],
+      "unlock": {
+        "orgLevel": 2,
+        "heroLevel": 15
+      },
+      "loot": [
+        "蓝装(M2)",
+        "材料"
+      ]
+    },
+    {
+      "key": "frost-pass",
+      "name": "冰冠山口",
+      "levelRange": [
+        30,
+        45
+      ],
+      "xp": 90,
+      "monster": {
+        "hp": [
+          200,
+          450
+        ],
+        "dmg": [
+          25,
+          45
+        ],
+        "dodgeTiers": [
+          "white",
+          "elite"
+        ]
+      },
+      "gold": [
+        5,
+        14
+      ],
+      "unlock": {
+        "orgLevel": 3,
+        "heroLevel": 30
+      },
+      "loot": [
+        "稀有装(M2)",
+        "铸造台材料"
+      ]
+    },
+    {
+      "key": "ember-ruins",
+      "name": "熔火废墟",
+      "levelRange": [
+        45,
+        60
+      ],
+      "xp": 180,
+      "monster": {
+        "hp": [
+          500,
+          1100
+        ],
+        "dmg": [
+          50,
+          90
+        ],
+        "dodgeTiers": [
+          "white",
+          "elite"
+        ]
+      },
+      "gold": [
+        9,
+        22
+      ],
+      "unlock": {
+        "orgLevel": 4,
+        "heroLevel": 45
+      },
+      "loot": [
+        "Tier III 词缀(M3)",
+        "史诗线索(M2+)"
+      ]
+    },
+    {
+      "key": "battlefield",
+      "name": "古战场遗迹",
+      "levelRange": [
+        60,
+        75
+      ],
+      "xp": 350,
+      "monster": {
+        "hp": [
+          1300,
+          2600
+        ],
+        "dmg": [
+          100,
+          170
+        ],
+        "dodgeTiers": [
+          "white",
+          "boss"
+        ]
+      },
+      "gold": [
+        15,
+        36
+      ],
+      "unlock": {
+        "orgLevel": 5,
+        "heroLevel": 60
+      },
+      "loot": [
+        "Tier II 词缀(M3)",
+        "装备图鉴(M4+)"
+      ]
+    },
+    {
+      "key": "lightless-abyss",
+      "name": "无光深渊",
+      "levelRange": [
+        75,
+        90
+      ],
+      "xp": 700,
+      "monster": {
+        "hp": [
+          3000,
+          6000
+        ],
+        "dmg": [
+          190,
+          300
+        ],
+        "dodgeTiers": [
+          "elite",
+          "boss"
+        ]
+      },
+      "gold": [
+        24,
+        55
+      ],
+      "unlock": {
+        "orgLevel": 6,
+        "heroLevel": 75
+      },
+      "loot": [
+        "Tier I 词缀(M3)",
+        "传说线索(M2+)"
+      ]
+    },
+    {
+      "key": "final-throne",
+      "name": "终焉王座",
+      "levelRange": [
+        90,
+        99
+      ],
+      "xp": 1500,
+      "monster": {
+        "hp": [
+          8000,
+          15000
+        ],
+        "dmg": [
+          350,
+          500
+        ],
+        "dodgeTiers": [
+          "boss",
+          "legend"
+        ]
+      },
+      "gold": [
+        40,
+        90
+      ],
+      "unlock": {
+        "orgLevel": 7,
+        "heroLevel": 90
+      },
+      "loot": [
+        "传说装(M2)",
+        "传奇度暴涨"
+      ]
+    }
+  ]
+}

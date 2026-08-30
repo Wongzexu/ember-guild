@@ -3,7 +3,7 @@
 > ⚠️ **规划草案 · 非正式方向**
 > 当前处于**规划阶段**。本文档只是假设性技术方案，**不代表最终架构**——即使将来决定做游戏，这些选择也可能因方向调整而全部变更。尚未安装任何环境、未写任何代码。
 >
-> 版本 v0.1 · 配套 GDD / NUMBERS。
+> 版本 v0.2（同步武器系统 v0.11/v0.12、英雄 v0.3~v0.5、SYSTEMS v0.10）· 配套 GDD / NUMBERS。
 > 规划期暂定（**非最终方向**）：**前端 = Vue 3 + Vite**；**无后端起步，预留云存档接口**；后期 Electron 桌面化。
 > 本文件回答三个问题：用什么前端？要不要后端？代码怎么组织？
 
@@ -16,7 +16,7 @@
 ```
 ┌───────────────────────────────────────────────┐
 │  UI 界面层  (Vue 组件)                          │
-│   角色面板 / 技能面板 / 背包 / 铸造台 / 战斗面板  │
+│   组织面板 / 英雄详情 / 出征面板 / 背包 / 铸造台 │
 │   只负责"把状态画出来"和"把玩家操作交给引擎"      │
 └───────────────────┬───────────────────────────┘
                     │ 读取 state / 派发 action
@@ -101,11 +101,11 @@ class SaveAdapter {
 {
   "version": "0.2.0",          // 存档版本号，升级时迁移
   "org": { "name": "无名团", "level": 1, "legend": 0, "gold": 0, "materials": {} },
-  "heroes": [                  // 英雄（软职业：倾向+属性+装备）
-    { "id": "h1", "affinity": "storm_heart", "rarity": "rare",
-      "level": 1, "str": 1, "dex": 3, "vit": 1, "int": 1,
-      "bias": "speed", "xp": 0, "personality": "brave",
-      "gear": { "weapon": null, "helmet": null, "chest": null, "..." : null } }
+  "heroes": [                  // 英雄（职业 + 五维属性 + 装备；无稀有度）
+    { "id": "h1", "class": "anvil", "talent": "t1",
+      "level": 1, "str": 12, "dex": 8, "vit": 12, "int": 5, "agi": 7,
+      "bias": "tank", "xp": 0, "personality": "guardian",
+      "gear": { "weapon": null, "offhand": null, "helmet": null, "chest": null, "..." : null } }
   ],
   "parties": [                 // 出征队伍（≤3 人/队）
     { "id": "p1", "heroIds": ["h1"], "region": "mist_edge", "mode": "expedition",
@@ -179,25 +179,26 @@ my-deskgame/
 │       ├── App.vue          # 根组件（布局：顶栏/技能栏/中央面板/背包）
 │       ├── engine/          # 纯逻辑层
 │       │   ├── core.js      # tick 循环、时间换算
-│       │   ├── skills.js    # 技能动作与经验
+│       │   ├── hero.js      # 英雄属性/升级/天赋点算
 │       │   ├── combat.js    # 战斗结算
 │       │   ├── loot.js      # 掉落与词缀 roll
 │       │   ├── craft.js     # 锻造/通货
 │       │   ├── prng.js      # 种子随机数
 │       │   └── save.js      # 存档/迁移/适配器接口
 │       ├── data/            # 数据表（纯 JSON，调数值只动这里）
-│       │   ├── skills.json
-│       │   ├── items.json   # 基底
-│       │   ├── affixes.json # 词缀池
-│       │   ├── maps.json
-│       │   └── currency.json
+│       │   ├── heroes.json     # 英雄（职业/成长曲线/天赋/性格）
+│       │   ├── regions.json    # 区域（HP/产出/iLv/M1 首 2~3 个）
+│       │   ├── items.json      # 装备基底（M2）
+│       │   ├── affixes.json    # 词缀池 + Tier 表（M3）
+│       │   ├── currency.json   # 通货效果与掉率（M3）
+│       │   └── crafting.json   # 铸造台配方（M3）
 │       ├── ui/              # Vue 组件
-│       │   ├── CharacterBar.vue
-│       │   ├── SkillPanel.vue
+│       │   ├── OrgPanel.vue        # 组织面板（M1）
+│       │   ├── HeroDetailPanel.vue # 英雄详情页（M1 A 形态）
+│       │   ├── ExpeditionPanel.vue # 出征面板（M1）
 │       │   ├── InventoryPanel.vue
 │       │   ├── GearPanel.vue
-│       │   ├── CraftingPanel.vue
-│       │   └── CombatPanel.vue
+│       │   └── CraftingPanel.vue
 │       └── style.css
 └── electron/                # M7 桌面打包时才建（占位说明）
 ```

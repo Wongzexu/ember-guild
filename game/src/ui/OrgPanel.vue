@@ -5,6 +5,8 @@ const props = defineProps({
   state: { type: Object, required: true },
 });
 
+const emit = defineEmits(["open-hero", "open-expedition"]);
+
 const onlineText = computed(() => {
   const s = Math.floor(props.state.meta.totalPlayMs / 1000);
   const h = String(Math.floor(s / 3600)).padStart(2, "0");
@@ -30,7 +32,19 @@ const onlineText = computed(() => {
       <div class="sig">—— 编年史官 · 首记 · 在线 {{ onlineText }}</div>
     </div>
 
-    <div class="placeholder activity">当前活动面板 —— 敬请期待</div>
+    <div class="activity">
+      <p class="act-hint">
+        余烬公会现有 <b>{{ state.heroes.length }}</b> 名成员：{{ state.heroes[0]?.name ?? "——" }}
+        <span v-if="state.parties[0]?.status === 'expedition'">正在远征（{{ state.parties[0].killCount }} 击杀）</span>
+        <span v-else>在院里等火</span>。
+      </p>
+      <div class="act-btns">
+        <button class="act-btn" type="button" @click="emit('open-hero')">
+          <b>{{ state.heroes[0]?.name ?? "英雄" }}</b> · 详情
+        </button>
+        <button class="act-btn" type="button" @click="emit('open-expedition')">出征</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -120,6 +134,44 @@ const onlineText = computed(() => {
 
 .activity {
   width: 100%;
-  min-height: 80px;
+  display: grid;
+  gap: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: var(--card-shadow);
+  padding: 18px 22px;
+}
+
+.act-hint {
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.8;
+}
+
+.act-hint b {
+  color: var(--gold);
+}
+
+.act-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.act-btn {
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--text);
+  background: linear-gradient(180deg, var(--ash-3), var(--ash-2));
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+
+.act-btn:hover {
+  border-color: var(--ember);
+  color: var(--ember);
 }
 </style>

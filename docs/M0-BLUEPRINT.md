@@ -50,7 +50,7 @@ my-deskgame/
         └── style.css
 ```
 
-**不建空文件**：skills/combat/loot/craft/prng/data/其余组件全部 M1+ 按需建（ARCHITECTURE §6 的完整清单是未来形态，不是 M0 目标）。
+**不建空文件**：combat/loot/craft/prng/data/其余组件全部 M1+ 按需建（ARCHITECTURE §6 的完整清单是未来形态，不是 M0 目标）。
 
 ---
 

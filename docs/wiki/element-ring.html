@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>元素环 · 挂机远征设定维基</title>
+<link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+<div class="wiki-layout">
+<aside class="sidebar">
+  <a class="logo" href="index.html">
+    <span class="seal">远征</span>
+    <span class="site-name">挂机远征<span class="site-sub">SETTING WIKI</span></span>
+  </a>
+  <nav>
+    <h3>词条</h3>
+    <ul>
+      <li><a href="index.html">首页</a></li>
+      <li><a href="attribute-disc.html">属性盘</a></li>
+      <li><a href="element-ring.html" class="here">元素环</a></li>
+      <li><a href="combat.html">战斗体系</a></li>
+      <li><a href="weapons.html">武器系统</a></li>
+      <li><a href="weapon-ring.html">武器圆环</a></li>
+      <li><a href="heroes.html">英雄系统</a>
+        <ul class="subnav">
+          <li><a href="roster.html">英雄图鉴</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3>规划文档</h3>
+    <ul>
+      <li><a href="../GDD.md">GDD 游戏设计</a></li>
+      <li><a href="../SYSTEMS.md">SYSTEMS 体系骨架</a></li>
+      <li><a href="../WEAPONS.md">WEAPONS 武器正文</a></li>
+      <li><a href="../NUMBERS.md">NUMBERS 数值细则</a></li>
+      <li><a href="../DECISIONS.md">DECISIONS 决策日志</a></li>
+    </ul>
+  </nav>
+  <p class="pedia-note">本维基条目为规划文档的「机制纲要版」——结构不写死、数值一律以 NUMBERS 原文为准。</p>
+</aside>
+
+<main class="main">
+<article class="article">
+<h1 class="article-title">元素环 <span class="subtitle">色环 · 六型双元素体系</span></h1>
+
+<p class="hatnote"><b>本文介绍的是元素环</b>——法术伤害的元素类型环。与 <a href="attribute-disc.html">属性盘</a> 结构同构但<strong>互不映射</strong>；元素如何参与战斗/防御见 <a href="combat.html">战斗体系</a>。依据 <a href="../SYSTEMS.md">SYSTEMS v0.10</a> 整理。</p>
+
+<div class="infobox">
+  <div class="ib-title">元素环</div>
+  <table>
+    <tr><td class="k">体系类型</td><td class="v">色环 · 圆环</td></tr>
+    <tr><td class="k">一层 · 主元素</td><td class="v"><span class="dot fire"></span>火 <span class="dot thunder"></span>雷 <span class="dot ice"></span>冰<span class="sub">+ 三混合：火雷 / 火冰 / 雷冰 = 6 型</span></td></tr>
+    <tr><td class="k">二层 · 能力元素</td><td class="v"><span class="dot poison"></span>毒 · <span class="dot arcane"></span>奥术<span class="sub">机制位，不占主元素格</span></td></tr>
+    <tr><td class="k">与属性盘</td><td class="v">只镜像结构，不镜像关联<span class="sub">火雷 ≠ 力敏</span></td></tr>
+    <tr><td class="k">与职业</td><td class="v"><b>无关</b><span class="sub">元素经装备词缀/技能进入战斗</span></td></tr>
+    <tr><td class="k">数值细则</td><td class="v"><a href="../NUMBERS.md">NUMBERS</a> §3.4</td></tr>
+    <tr><td class="k">决策沿革</td><td class="v">SYSTEMS v0.10</td></tr>
+  </table>
+</div>
+
+<h2 id="outline">1. 概述</h2>
+<p>元素环是法术侧的颜色编码，与属性盘是两张<b>同构但独立</b>的色环：三原色（火/雷/冰）→ 三混合（弧中点），结构完全一样，内容各不相干。元素与职业无关——职业表不设元素主色，元素<b>只能</b>经装备词缀或技能进入战斗。</p>
+
+<svg class="diagram" width="920" height="900" viewBox="0 0 900 900" role="img" aria-label="元素环六型示意图">
+  <!-- 一层 · 六型（外环带 r=360→230，每型 60°）：
+       火=0°（12点）· 火雷=60° · 雷=120° · 雷冰=180° · 冰=240° · 火冰=300° -->
+  <path d="M 270,138 A 360,360 0 0 1 630,138 L 565,251 A 230,230 0 0 0 335,251 Z" fill="#c6432b" fill-opacity="0.14" stroke="#c6432b" stroke-width="2"/>
+  <path d="M 630,138 A 360,360 0 0 1 810,450 L 680,450 A 230,230 0 0 0 565,251 Z" fill="#d9772f" fill-opacity="0.10" stroke="#d9772f" stroke-width="2"/>
+  <path d="M 810,450 A 360,360 0 0 1 630,762 L 565,649 A 230,230 0 0 0 680,450 Z" fill="#d9a405" fill-opacity="0.14" stroke="#d9a405" stroke-width="2"/>
+  <path d="M 630,762 A 360,360 0 0 1 270,762 L 335,649 A 230,230 0 0 0 565,649 Z" fill="#3f9e97" fill-opacity="0.10" stroke="#3f9e97" stroke-width="2"/>
+  <path d="M 270,762 A 360,360 0 0 1 90,450 L 220,450 A 230,230 0 0 0 335,649 Z" fill="#2e86c1" fill-opacity="0.14" stroke="#2e86c1" stroke-width="2"/>
+  <path d="M 90,450 A 360,360 0 0 1 270,138 L 335,251 A 230,230 0 0 0 220,450 Z" fill="#9950a8" fill-opacity="0.10" stroke="#9950a8" stroke-width="2"/>
+
+  <!-- 外圈轮廓 -->
+  <circle cx="450" cy="450" r="360" fill="none" stroke="#8b6f47" stroke-width="4"/>
+  <circle cx="450" cy="450" r="230" fill="none" stroke="#7d6748" stroke-width="2.5" stroke-dasharray="6 5"/>
+
+  <!-- 六型标签（外环 r=415）-->
+  <text x="450" y="35" text-anchor="middle" class="ring-title" fill="#c6432b">火</text>
+  <text x="809" y="242" text-anchor="middle" class="ring-title" fill="#d9772f">火雷</text>
+  <text x="809" y="658" text-anchor="middle" class="ring-title" fill="#d9a405">雷</text>
+  <text x="450" y="865" text-anchor="middle" class="ring-title" fill="#3f9e97">雷冰</text>
+  <text x="91" y="658" text-anchor="middle" class="ring-title" fill="#2e86c1">冰</text>
+  <text x="91" y="242" text-anchor="middle" class="ring-title" fill="#9950a8">火冰</text>
+
+  <!-- 二层 · 能力元素（中心圈 r=152）-->
+  <circle cx="450" cy="450" r="152" fill="#6a7c24" fill-opacity="0.05" stroke="#7d6748" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="450" y="382" text-anchor="middle" class="ring-title" fill="#556b2f">毒</text>
+  <text x="450" y="404" text-anchor="middle" class="weapon-note">DoT + debuff</text>
+  <text x="450" y="420" text-anchor="middle" class="weapon-note">只吃毒词条</text>
+  <text x="450" y="474" text-anchor="middle" class="ring-title" fill="#6c5ce7">奥术</text>
+  <text x="450" y="499" text-anchor="middle" class="weapon-note">无属性法力伤 · 吃INT</text>
+  <text x="450" y="536" text-anchor="middle" class="weapon-note">不吃元素抗/易伤</text>
+</svg>
+<p class="figcaption">元素环 · 一层六型（外环带）+ 二层能力元素（中心圈）</p>
+
+<div class="legend">
+  <b>判读</b>：<span class="dot fire"></span>火（顶）<span class="dot thunder"></span>雷（右下）<span class="dot ice"></span>冰（左下）｜混合型（弧中点）：<span class="dot firered"></span>火雷 · <span class="dot thunderice"></span>雷冰 · <span class="dot fireice"></span>火冰
+  ｜ 虚线内圈 = <b>二层机制位</b>：毒（DoT+debuff，只吃毒词条）· 奥术（无属性法力伤，不想吃元素抗性/易伤）。
+</div>
+
+<h2 id="layer1">2. 一层 · 常规主元素（数值层）</h2>
+<table class="wikitable">
+  <tr><th>型</th><th>色</th><th>性质</th><th>加成来源</th></tr>
+  <tr><td>火</td><td><span class="dot fire"></span>橙红</td><td>灼烧（DoT 系）</td><td rowspan="6">INT 元素加成 + 对应元素词缀（装备端）</td></tr>
+  <tr><td>雷</td><td><span class="dot thunder"></span>金</td><td>感电（状态系）</td></tr>
+  <tr><td>冰</td><td><span class="dot ice"></span>蓝</td><td>缓滞（状态系）</td></tr>
+  <tr><td>火雷</td><td><span class="dot firered"></span>橙金</td><td>混合型（相邻远色合成）</td></tr>
+  <tr><td>火冰</td><td><span class="dot fireice"></span>紫</td><td>混合型 · 占位名</td></tr>
+  <tr><td>雷冰</td><td><span class="dot thunderice"></span>青</td><td>混合型 · 占位名</td></tr>
+</table>
+<p class="note">与属性环<b>只镜像结构、不镜像关联</b>：元素环的混合型（火雷）对应的是结构上的「弧中点」，内容上与属性盘的力敏核没有任何对应关系。</p>
+
+<h2 id="layer2">3. 二层 · 特殊能力元素（机制位）</h2>
+<ul class="clean">
+  <li><span class="dot poison"></span><b>毒</b>：DoT + debuff 体系，<strong>只吃毒词条</strong>——不参与元素环主元素的加成分账。</li>
+  <li><span class="dot arcane"></span><b>奥术</b>：「无属性法力伤」，<strong>吃 INT</strong>，不吃元素抗性 / 易伤，只吃法术增减——真伤系法术的典型出口。</li>
+</ul>
+
+<h2 id="linkage">4. 与战斗体系的接线</h2>
+<ul class="clean">
+  <li><b>伤害侧</b>：元素环是法术极的「基准」来源之一（数值层）；特效类（灼烧/感电/缓滞/毒）挂在一层的元素类型上，吃<a href="attribute-disc.html#int">INT 直径</a>的「特效/持续」套加成。</li>
+  <li><b>防御侧</b>：元素抗（装备端减免）<strong>按色环细分</strong>——火抗 / 雷抗 / 冰抗；双元素混合抗性细则 M2。两条推导型抗性：<b>毒抗 = 全部元素抗的平均</b>；<b>奥抗 = 全部元素抗的总加</b>（上限/曲线 M2）。</li>
+  <li><b>真伤出口</b>：元素真伤（无视元素抗，如湮灭炮）——见 <a href="combat.html">战斗体系 §1</a>。</li>
+</ul>
+
+<h2 id="see">参见</h2>
+<div class="seealso">
+  <ul>
+    <li><a href="attribute-disc.html">属性盘</a> — 同构环：结构镜像、内容无关</li>
+    <li><a href="combat.html">战斗体系</a> — 法术极基准 / 元素抗分层 / 真伤协定</li>
+    <li><a href="weapons.html">武器系统</a> — 元素词缀的装备端入口</li>
+  </ul>
+  <span class="note">依据：<a href="../SYSTEMS.md">SYSTEMS §3~§6</a> · 数值：<a href="../NUMBERS.md">NUMBERS §3.4</a></span>
+</div>
+
+<div class="catlinks"><b>分类</b><a href="index.html">属性体系</a><a href="combat.html">战斗体系</a></div>
+
+<footer class="site-footer">
+  元素环 · 依据 SYSTEMS v0.10 · 本页同步于 M2 开发期
+</footer>
+</article>
+</main>
+</div>
+</body>
+</html>

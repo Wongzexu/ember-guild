@@ -1,10 +1,8 @@
 # 《挂机远征》技术架构文档（ARCHITECTURE）
 
-> ⚠️ **规划草案 · 非正式方向**
-> 当前处于**规划阶段**。本文档只是假设性技术方案，**不代表最终架构**——即使将来决定做游戏，这些选择也可能因方向调整而全部变更。尚未安装任何环境、未写任何代码。
->
-> 版本 v0.2（同步武器系统 v0.11/v0.12、英雄 v0.3~v0.5、SYSTEMS v0.10）· 配套 GDD / NUMBERS。
-> 规划期暂定（**非最终方向**）：**前端 = Vue 3 + Vite**；**无后端起步，预留云存档接口**；后期 Electron 桌面化。
+> ✅ **技术选型已定稿**（2026-08-26，ADR-001 accepted：留 Vue 3 + Vite，不换 Godot）。
+> **前端 = Vue 3 + Vite**；**无后端起步，预留云存档接口**；后期 Electron 桌面化。M0/M1 已按此实现并验收，当前 M2 装备系统开发中（86+ 引擎测试绿）。
+> 版本 v0.3（对齐实况：存档 v0.4、engine/data/ui 实际清单）· 配套 GDD / NUMBERS。
 > 本文件回答三个问题：用什么前端？要不要后端？代码怎么组织？
 
 ---
@@ -99,24 +97,30 @@ class SaveAdapter {
 
 ```jsonc
 {
-  "version": "0.2.0",          // 存档版本号，升级时迁移
-  "org": { "name": "无名团", "level": 1, "legend": 0, "gold": 0, "materials": {} },
-  "heroes": [                  // 英雄（职业 + 五维属性 + 装备；无稀有度）
-    { "id": "h1", "class": "anvil", "talent": "t1",
-      "level": 1, "str": 12, "dex": 8, "vit": 12, "int": 5, "agi": 7,
-      "bias": "tank", "xp": 0, "personality": "guardian",
-      "gear": { "weapon": null, "offhand": null, "helmet": null, "chest": null, "..." : null } }
+  "version": "0.7.0",          // 存档版本号，升级时迁移（0.1→0.2→…→0.7，见 save.js）
+  "org": { "name": "余烬公会", "level": 1, "legend": 0, "gold": 0, "materials": {} },
+  "heroes": [                  // 英雄（职业 + 五维 + visual 素材键 + 装备；无稀有度）
+    { "id": "h1", "class": "anvil", "visual": { "portrait": "eigrem" },
+      "level": 1, "xp": 0, "hp": 244,
+      "base": { "str": 12, "dex": 8, "vit": 12, "int": 5, "agi": 7 },
+      "bias": null,            // 策略倾向（M2 起接线，五倾向权重表）
+      "equipment": { "weapon": "<实例id>", "offhand": null, "...": null } }
   ],
   "parties": [                 // 出征队伍（≤3 人/队）
-    { "id": "p1", "heroIds": ["h1"], "region": "mist_edge", "mode": "expedition",
-      "autoFarm": true, "offlineReport": [] }
+    { "id": "p1", "heroIds": ["h1"], "regionKey": "mist_edge", "status": "expedition",
+      "killCount": 0, "goldEarned": 0 }
   ],
-  "inventory": { "gold": 0, "materials": { "iron_ore": 0 }, "items": [] },
-  "chronicle": [               // 编年史：世界记住你的方式
+  "inventory": { "items": [] },  // 装备实例池（weaponId 铸实例，meta.nextItemId 发号）
+  "chronicle": [               // 编年史（史诗层）：只记固定里程碑，叙事文案、无数值
     { "t": 0, "text": "组织成立，招入第一名英雄…", "legend": 5 }
   ],
+  "battleLog": [               // 战记（具体事件层）：战斗事实流水，滚动截断 300 条（DECISIONS 2026-09-04 两层分轨）
+    { "t": 0, "text": "艾格雷姆 攻击 余烬猎犬，造成 3 伤害" }
+  ],
   "unlocks": { "regions": ["mist_edge"], "events": [] },
-  "meta": { "createdAt": 0, "lastSavedAt": 0, "totalPlayMs": 0, "rngSeed": 12345 }
+  "meta": { "createdAt": 0, "lastSavedAt": 0, "totalPlayMs": 0,
+            "rngState": 12345,       // PRNG 状态外置（纯函数步进，非 seed 重放）
+            "nextItemId": 2 }
 }
 ```
 
@@ -131,8 +135,8 @@ class SaveAdapter {
 
 ### 4.3 随机数：固定种子（进阶但重要）
 
-- 存档记录一个 `rngSeed`，所有掉落/词缀/暴击随机都用"种子随机数"（PRNG）派生。
-- 好处：同一状态下结果可复现 → 未来云同步 / 离线结算 / 回放都精确一致，也方便测试数值。
+- 存档外置 PRNG 状态 `meta.rngState`（`game/src/engine/prng.js` 纯函数步进：`next(rngState) → (值, 新状态)`），所有掉落/词缀/命中/暴击随机都从这里派生。
+- **rng 消耗次序 = 战斗契约**（如命中 roll → 伤害 roll，#3 Q4）——同一状态下逐 roll 可复现 → 未来云同步 / 离线结算 / 回放都精确一致，也方便测试数值。
 
 ---
 
@@ -177,43 +181,45 @@ my-deskgame/
 │   └── src/
 │       ├── main.js          # 入口：装配引擎+存档+UI
 │       ├── App.vue          # 根组件（布局：顶栏/技能栏/中央面板/背包）
-│       ├── engine/          # 纯逻辑层
+│       ├── engine/          # 纯逻辑层（实际清单；每文件并列同名 *.test.js）
 │       │   ├── core.js      # tick 循环、时间换算
-│       │   ├── hero.js      # 英雄属性/升级/天赋点算
-│       │   ├── combat.js    # 战斗结算
-│       │   ├── loot.js      # 掉落与词缀 roll
-│       │   ├── craft.js     # 锻造/通货
-│       │   ├── prng.js      # 种子随机数
-│       │   └── save.js      # 存档/迁移/适配器接口
+│       │   ├── hero.js      # 英雄属性点算（heroStats：起始+曲线+天赋+装备 flat）
+│       │   ├── xp.js        # 经验曲线（§2.1 锚点插值）
+│       │   ├── expedition.js# 远征推进 + 战斗结算 + 命中/闪避管线（hitChance 等）
+│       │   ├── equipment.js # 装备实例/穿戴校验/掉落 roll（M2）
+│       │   ├── prng.js      # 种子随机数（rngState 纯函数步进）
+│       │   └── save.js      # 存档/迁移/适配器接口（当前 v0.4）
+│       │                    # craft.js（锻造/通货）M3 按需新建
 │       ├── data/            # 数据表（纯 JSON，调数值只动这里）
-│       │   ├── heroes.json     # 英雄（职业/成长曲线/天赋/性格）
-│       │   ├── regions.json    # 区域（HP/产出/iLv/M1 首 2~3 个）
-│       │   ├── items.json      # 装备基底（M2）
-│       │   ├── affixes.json    # 词缀池 + Tier 表（M3）
+│       │   ├── heroes.json     # 英雄（职业/成长/天赋/性格/visual 键）
+│       │   ├── monsters.json   # 怪物（HP/伤害/分档/visual 键）
+│       │   ├── regions.json    # 区域（产出/iLv/敌闪避分档 dodgeTiers）
+│       │   ├── items.json      # 装备基底（M2 首批 8 基底）
+│       │   ├── affixes.json    # 词缀池（M2 首批 weapon/shield 池）
+│       │   ├── visuals.js      # 视觉映射：单位动画路径/时序(attackHitMs)/fx.impact
 │       │   ├── currency.json   # 通货效果与掉率（M3）
 │       │   └── crafting.json   # 铸造台配方（M3）
-│       ├── ui/              # Vue 组件
-│       │   ├── OrgPanel.vue        # 组织面板（M1）
-│       │   ├── HeroDetailPanel.vue # 英雄详情页（M1 A 形态）
-│       │   ├── ExpeditionPanel.vue # 出征面板（M1）
-│       │   ├── InventoryPanel.vue
-│       │   ├── GearPanel.vue
-│       │   └── CraftingPanel.vue
+│       ├── ui/              # Vue 组件（实际清单）
+│       │   ├── OrgPanel.vue / ProloguePanel.vue    # 组织面板 / 序章事件
+│       │   ├── HeroListPanel.vue / HeroDetailPanel.vue  # 名册 / 英雄详情（A 形态）
+│       │   ├── ExpeditionPanel.vue                  # 出征面板（战斗回放挂载点）
+│       │   ├── InventoryPanel.vue                   # 背包·装备（M2）
+│       │   ├── HeroVisual.vue / MonsterVisual.vue   # 单位动画组件
+│       │   ├── ActionTestPanel.vue / AssetTimingPanel.vue / AssetGalleryPanel.vue  # 素材调试台
+│       │   └── proto/                               # 面板原型存档
 │       └── style.css
 └── electron/                # M7 桌面打包时才建（占位说明）
 ```
 
 ---
 
-## 7. 开发环境（一步步，到 M1 时照做）
+## 7. 开发环境（M0 已照此完成；新机器复现照做即可）
 
 1. 安装 **Node.js LTS**（免费，官网 nodejs.org 下载，装完命令行里 `node -v` 能打印版本号就算成功）。
 2. 在项目根目录创建前端工程：`npm create vite@latest game -- --template vue`
 3. 进入工程安装依赖：`cd game && npm install`
 4. 启动开发服务器：`npm run dev` → 浏览器打开提示的地址（如 `http://localhost:5173`）→ **即改即刷新**。
-5. M1 目标验收：页面出现组织面板，派英雄"出征"后数字开始涨，刷新页面不丢。
-
-> 这是**仅有一次**的环境安装成本；之后所有开发都在这个工作流里。到时我会在 M1 里程碑手把手带你走完这几步。
+5. 里程碑验收沿用各蓝图清单：M0（组织面板刷新不丢）✅、M1（出征后数字涨、刷新不丢）✅ 均已通过。
 
 ---
 

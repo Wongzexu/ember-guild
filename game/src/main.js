@@ -6,9 +6,19 @@ import "./style.css";
 
 const adapter = createSaveAdapter();
 const AUTOSAVE_MS = 30000;
+// 一键清档标志：清档 → reload 的间隙里，beforeunload/自动存档不得把旧状态写回
+const DISCARD_KEY = "ardora_discard_save";
+
+function discardingSave() {
+  return sessionStorage.getItem(DISCARD_KEY) === "1";
+}
+
+sessionStorage.removeItem(DISCARD_KEY);
 
 function snapshot(state) {
-  return JSON.parse(JSON.stringify(state));
+  const { combatEvents, ...persisted } = state;
+  void combatEvents;
+  return JSON.parse(JSON.stringify(persisted));
 }
 
 async function bootstrap() {
@@ -32,11 +42,13 @@ async function bootstrap() {
   }, TICK_MS);
 
   setInterval(() => {
+    if (discardingSave()) return;
     r.meta.lastSavedAt = Date.now();
     adapter.save(snapshot(r));
   }, AUTOSAVE_MS);
 
   window.addEventListener("beforeunload", () => {
+    if (discardingSave()) return;
     r.meta.lastSavedAt = Date.now();
     adapter.save(snapshot(r));
   });

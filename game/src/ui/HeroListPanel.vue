@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import { heroStats } from "../engine/hero.js";
-import helmetIcon from "./icons/warrior-helmet-lv1.svg";
+import HeroVisual from "./HeroVisual.vue";
 
 const props = defineProps({
   state: { type: Object, required: true },
@@ -12,10 +12,6 @@ const emit = defineEmits(["select"]);
 const runningParty = computed(() =>
   props.state.parties.find((p) => p.status === "expedition"),
 );
-
-function ico(url) {
-  return { "--icon": `url("${url}")` };
-}
 
 function statusOf(hero) {
   if (runningParty.value?.heroIds.includes(hero.id)) {
@@ -42,7 +38,7 @@ function statusOf(hero) {
       >
         <div class="card-top">
           <div class="avatar">
-            <i class="icon" :style="ico(helmetIcon)"></i>
+            <HeroVisual :hero="h" />
           </div>
           <div class="title">
             <h3>{{ h.name }}</h3>
@@ -114,13 +110,14 @@ function statusOf(hero) {
 .avatar {
   width: 56px;
   height: 56px;
-  border-radius: 6px;
+  border-radius: 2px;
   border: 1px solid var(--line);
   background: var(--ash-2);
   display: grid;
   place-items: center;
   font-size: 30px;
   color: var(--ember);
+  box-shadow: var(--ui-shadow);
 }
 
 .title h3 {

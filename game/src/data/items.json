@@ -3,12 +3,91 @@
     {
       "id": "copper-hammer",
       "type": "weapon",
-      "category": "onehand",
+      "handedness": "one",
+      "slot": "mainhand",
       "subtype": "hammer",
       "name": "铜锤",
       "reqLevel": 1,
       "damage": [1, 3],
       "bps": 1.0,
+      "implicit": null
+    },
+    {
+      "id": "iron-hammer",
+      "type": "weapon",
+      "handedness": "one",
+      "slot": "mainhand",
+      "subtype": "hammer",
+      "name": "铁锤",
+      "reqLevel": 5,
+      "damage": [5, 9],
+      "bps": 1.0,
+      "implicit": { "affix": "attack_speed_pct", "value": 3 }
+    },
+    {
+      "id": "steel-hammer",
+      "type": "weapon",
+      "handedness": "one",
+      "slot": "mainhand",
+      "subtype": "hammer",
+      "name": "钢锤",
+      "reqLevel": 15,
+      "damage": [9, 16],
+      "bps": 1.0,
+      "implicit": { "affix": "attack_speed_pct", "value": 4 }
+    },
+    {
+      "id": "great-hammer",
+      "type": "weapon",
+      "handedness": "two",
+      "slot": "mainhand",
+      "subtype": "hammer",
+      "name": "大锤",
+      "reqLevel": 5,
+      "damage": [10, 16],
+      "bps": 0.8,
+      "implicit": null
+    },
+    {
+      "id": "adamant-hammer",
+      "type": "weapon",
+      "handedness": "one",
+      "slot": "mainhand",
+      "subtype": "hammer",
+      "name": "精金锤",
+      "reqLevel": 30,
+      "damage": [18, 30],
+      "bps": 1.0,
+      "implicit": { "affix": "attack_speed_pct", "value": 6 }
+    },
+    {
+      "id": "wood-shield",
+      "type": "shield",
+      "slot": "offhand",
+      "subtype": "phys",
+      "name": "木盾",
+      "reqLevel": 1,
+      "armor": 8,
+      "implicit": null
+    },
+    {
+      "id": "oak-shield",
+      "type": "shield",
+      "slot": "offhand",
+      "subtype": "phys",
+      "name": "橡木盾",
+      "reqLevel": 5,
+      "armor": 22,
+      "implicit": null
+    },
+    {
+      "id": "steel-shield",
+      "type": "shield",
+      "slot": "offhand",
+      "subtype": "phys",
+      "name": "钢盾",
+      "reqLevel": 15,
+      "armor": 40,
       "implicit": null
     }
   ]

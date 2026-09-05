@@ -1,6 +1,6 @@
 # 武器系统总览（WEAPONS）· v1.0
 
-> 武器系统**机制正文唯一入口**（PoE 式·已简化）。数字细则表（基底阶梯/词缀数值/通货掉率）留在 NUMBERS §5~§6，此处只引用不复制。圆环图见 [wiki/weapon-ring.html](wiki/weapon-ring.html)（亦可作维基站入口 [wiki/index.html](wiki/index.html)）。决策沿革 DECISIONS v0.11~v0.12。
+> 武器系统**机制正文唯一入口**（PoE 式·已简化）。数字细则表（基底阶梯/词缀数值/通货掉率）留在 NUMBERS §5~§6，此处只引用不复制。圆环图见 [wiki/weapon-ring.html](wiki/weapon-ring.html)（亦可作维基站入口 [wiki/index.html](wiki/index.html)）。决策沿革 DECISIONS v0.11~v0.13。
 
 ## 1. 设计原则
 
@@ -73,8 +73,6 @@ PoE 简化版：**基底 + 前缀/后缀词缀 + Tier + 稀有度 + 通货锻造
 | 头 / 身 / 手 / 脚 | 防具 4 | 各带各自词缀池（防具池通用） |
 | 戒指 / 项链 | 饰品 2 | 词缀池最稀（"诱人词缀"优选位） |
 
->
-
 ## 9. 铸造与通货
 
 通货锻造（蜕变/改造/点金/重铸/混沌/崇高/神圣——掉率 NUMBERS §6）+ **铸造台保底**（指定词缀必上、升级档、重roll——对冲"纯随机劝退"，NUMBERS §5.6）。
@@ -89,4 +87,4 @@ PoE 简化版：**基底 + 前缀/后缀词缀 + Tier + 稀有度 + 通货锻造
 | 12 职业偏好映射 | NUMBERS §5.0 |
 | 英雄侧装备定型 | HEROES.md §5 |
 | 伤害极×层（物理/法术侧） | SYSTEMS §4 |
-| 决策沿革 | DECISIONS v0.11~v0.12 |
+| 决策沿革 | DECISIONS v0.11~v0.13（武器/槽位） |

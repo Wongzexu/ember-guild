@@ -1,23 +1,43 @@
 <script setup>
 import { computed } from "vue";
-import { heroStats, weaponOf, heroAttackRange } from "../engine/hero.js";
+import { heroStats, heroAttackRange } from "../engine/hero.js";
+import { SLOTS, SLOT_LABEL, WEARABLE_SLOTS, instanceName } from "../engine/equipment.js";
 import { xpToReach, LEVEL_MAX } from "../engine/xp.js";
-import helmetIcon from "./icons/warrior-helmet-lv1.svg";
+import HeroVisual from "./HeroVisual.vue";
 import chartIcon from "./icons/chart.svg";
 import swordIcon from "./icons/sword.svg";
+import playIcon from "./icons/play.svg";
+import shieldIcon from "./icons/shield.svg";
 
 const props = defineProps({
   hero: { type: Object, required: true },
+  state: { type: Object, required: true },
 });
 
-const emit = defineEmits(["back"]);
+const emit = defineEmits(["back", "open-inventory"]);
 
 const stats = computed(() => heroStats(props.hero));
-const weapon = computed(() => {
-  const w = weaponOf(props.hero);
-  return w ? { name: w.name, damage: `${w.damage[0]}–${w.damage[1]}` } : null;
-});
 const range = computed(() => heroAttackRange(props.hero));
+const inCombat = computed(() =>
+  (props.state.parties ?? []).some(
+    (p) => p.status === "expedition" && (p.heroIds ?? []).includes(props.hero.id)
+  )
+);
+// 详情页装备区块 = 只读摘要（#05 ①：槽位+装备名+稀有度，无战斗数字）
+const equipRows = computed(() =>
+  SLOTS.map((slot) => {
+    const inst = props.hero.equipment?.[slot] ?? null;
+    const locked = !WEARABLE_SLOTS.has(slot);
+    return {
+      slot,
+      slotLabel: SLOT_LABEL[slot],
+      name: inst ? instanceName(inst) : null,
+      rarity: inst?.rarity ?? null,
+      rarityText: inst?.rarity === "blue" ? "稀" : "白",
+      locked,
+    };
+  })
+);
 const xpInfo = computed(() => {
   const cur = xpToReach(props.hero.level);
   const next = xpToReach(props.hero.level + 1);
@@ -49,7 +69,7 @@ function ico(url) {
     <div class="head">
       <button class="back" type="button" @click="emit('back')">← 名册</button>
       <div class="avatar">
-        <i class="icon" :style="ico(helmetIcon)"></i>
+        <HeroVisual :hero="hero" />
       </div>
       <div class="meta">
         <h1>{{ hero.name }} <span class="title">{{ hero.title }}</span></h1>
@@ -66,6 +86,13 @@ function ico(url) {
       </div>
     </div>
 
+    <section class="panel animation-panel">
+      <h2><i class="icon" :style="ico(playIcon)"></i> 预览</h2>
+      <div class="animation-frame">
+        <HeroVisual :hero="hero" :show-controls="true" />
+      </div>
+    </section>
+
     <div class="grid">
       <section class="panel">
         <h2><i class="icon" :style="ico(chartIcon)"></i> 五维</h2>
@@ -80,10 +107,39 @@ function ico(url) {
         <h2><i class="icon" :style="ico(swordIcon)"></i> 战斗</h2>
         <div class="kv"><span>生命</span><b>{{ Math.ceil(stats.maxHp) }}（现 {{ hero.hp === null ? "满" : Math.ceil(hero.hp) }}）</b></div>
         <div class="kv"><span>物抗 / 法抗</span><b>{{ (stats.physRes).toFixed(1) }}% / {{ (stats.magRes).toFixed(1) }}%</b></div>
-        <div class="kv"><span>武器</span><b v-if="weapon">{{ weapon.name }}（{{ weapon.damage }}）</b><b v-else>徒手</b></div>
         <div class="kv"><span>攻击区间</span><b>{{ range[0] }}–{{ range[1] }}</b></div>
       </section>
     </div>
+
+    <section class="panel equip">
+      <div class="equip-head">
+        <h2><i class="icon" :style="ico(shieldIcon)"></i> 装备</h2>
+        <button
+          class="wear-btn"
+          type="button"
+          :disabled="inCombat"
+          :title="inCombat ? '远征中禁止换装' : '前往背包 · 装备'"
+          @click="emit('open-inventory', hero.id)"
+        >
+          穿戴装备
+        </button>
+      </div>
+      <p v-if="inCombat" class="combat-hint">远征进行中，装备交互仅限非战斗态。</p>
+      <div class="equip-grid">
+        <div v-for="row in equipRows" :key="row.slot" class="equip-cell" :class="{ locked: row.locked, filled: row.name }">
+          <span class="slot">{{ row.slotLabel }}</span>
+          <span class="item">
+            <template v-if="row.name">
+              <span class="rarity" :class="row.rarity">{{ row.rarityText }}</span>
+              {{ row.name }}
+            </template>
+            <template v-else>
+              <span class="empty">{{ row.locked ? "未解锁" : "（空）" }}</span>
+            </template>
+          </span>
+        </div>
+      </div>
+    </section>
 
     <section class="panel talents">
       <h2>天赋</h2>
@@ -131,14 +187,18 @@ function ico(url) {
 .avatar {
   width: 84px;
   height: 84px;
-  border-radius: 6px;
+  border-radius: 2px;
   border: 1px solid var(--line);
   background: var(--card-bg);
   display: grid;
   place-items: center;
   font-size: 44px;
   color: var(--ember);
+  box-shadow: var(--ui-shadow);
 }
+
+.animation-panel { overflow: visible; }
+.animation-frame { width: 180px; height: 180px; margin: 2px auto 0; position: relative; }
 
 .meta h1 {
   font-size: 22px;
@@ -254,5 +314,103 @@ function ico(url) {
 .talents p {
   font-size: 13px;
   line-height: 1.9;
+}
+
+.equip-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.equip-head h2 {
+  margin-bottom: 0;
+}
+
+.wear-btn {
+  border: 1px solid var(--ember);
+  background: linear-gradient(180deg, var(--ash-3), var(--ash-2));
+  color: var(--text);
+  border-radius: 3px;
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 3px;
+  cursor: pointer;
+}
+
+.wear-btn:hover:not(:disabled) {
+  color: var(--ember);
+}
+
+.wear-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.combat-hint {
+  color: var(--dim);
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.equip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 28px;
+  font-size: 13px;
+}
+
+.equip-cell {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px dashed var(--line);
+}
+
+.equip-cell:nth-child(-n + 2) {
+  border-top: none;
+}
+
+.equip-cell .slot {
+  color: var(--dim);
+  width: 64px;
+  flex-shrink: 0;
+}
+
+.equip-cell .item {
+  color: var(--text);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.equip-cell.locked .item {
+  opacity: 0.35;
+}
+
+.rarity {
+  font-size: 11px;
+  letter-spacing: 1px;
+  border-radius: 2px;
+  padding: 1px 6px;
+  margin-right: 8px;
+}
+
+.rarity.white {
+  color: var(--dim);
+  border: 1px solid var(--line);
+}
+
+.rarity.blue {
+  color: #7db3e8;
+  border: 1px solid #7db3e8;
+}
+
+.empty {
+  color: var(--dim);
+  font-size: 12px;
 }
 </style>

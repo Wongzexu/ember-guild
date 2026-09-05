@@ -6,6 +6,17 @@
       "name": "艾格雷姆",
       "title": "铁砧",
       "personality": "守护者 · 责任在心",
+      "background": "三十年前，他结束带队生涯回到炉镇打铁。第一次举盾时，手臂却先于记忆摆出远古护卫的姿势；炉底那块刻着失落誓文的盾牌碎片，成为他追查旧世界的起点。",
+      "origin": {
+        "era": "ancient",
+        "prototype": "Sworn Defender",
+        "connection": "oath-echo",
+        "certainty": "unknown"
+      },
+      "visual": {
+        "portrait": "eigrem",
+        "animationSet": "eigrem"
+      },
       "quotes": [
         "铁砧不响，活儿还没完",
         "炉火没熄，我就还在",

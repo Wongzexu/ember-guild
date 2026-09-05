@@ -1,0 +1,59 @@
+{
+  "pools": {
+    "weapon": [
+      {
+        "affix": "phys_damage_pct",
+        "name": "物理伤害",
+        "mod": "凶猛之",
+        "tier": 3,
+        "value": [7, 12]
+      },
+      {
+        "affix": "flat_phys",
+        "name": "附加物理点伤",
+        "mod": "锋利之",
+        "tier": 3,
+        "value": [1, 2]
+      },
+      {
+        "affix": "attack_speed_pct",
+        "name": "攻击速度",
+        "mod": "迅捷之",
+        "tier": 3,
+        "value": [2, 3]
+      },
+      {
+        "affix": "flat_str",
+        "name": "力量",
+        "stat": "str",
+        "mod": "力能之",
+        "tier": 3,
+        "value": [1, 2]
+      }
+    ],
+    "shield": [
+      {
+        "affix": "flat_armor",
+        "name": "护甲",
+        "mod": "坚固之",
+        "tier": 3,
+        "value": [4, 8]
+      },
+      {
+        "affix": "flat_hp",
+        "name": "生命上限",
+        "mod": "生机之",
+        "tier": 3,
+        "value": [10, 20]
+      },
+      {
+        "affix": "flat_dex",
+        "name": "敏捷",
+        "stat": "dex",
+        "mod": "轻盈之",
+        "tier": 3,
+        "value": [1, 2]
+      }
+    ]
+  }
+}

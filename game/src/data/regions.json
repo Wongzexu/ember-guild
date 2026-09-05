@@ -1,33 +1,65 @@
 {
   "regions": [
     {
+      "key": "tutorial-0-1",
+      "name": "初始",
+      "levelRange": [
+        1,
+        1
+      ],
+      "xp": 2,
+      "tutorial": true,
+      "enemies": [
+        "blaze-hound"
+      ],
+      "fixedEnemy": true,
+      "gold": [
+        1,
+        1
+      ],
+      "baseDropRate": 0,
+      "dropPool": [],
+      "unlock": {
+        "orgLevel": 1,
+        "heroLevel": 1
+      },
+      "loot": [
+        "首次击杀的教学经验"
+      ]
+    },
+    {
       "key": "mist-fringe",
       "name": "迷雾边缘",
       "levelRange": [
         1,
-        15
+        5
       ],
       "xp": 20,
-      "monster": {
-        "hp": [
-          15,
-          60
-        ],
-        "dmg": [
-          2,
-          8
-        ],
-        "dodgeTiers": [
-          "white"
-        ]
+      "enemies": [
+        "blaze-hound",
+        "blue-sting-scorpion"
+      ],
+      "boss": {
+        "id": "golden-mantella",
+        "every": 10
       },
       "gold": [
         1,
         4
       ],
+      "baseDropRate": 0.4,
+      "blueChance": 0,
+      "dropPool": [
+        "copper-hammer",
+        "iron-hammer",
+        "great-hammer",
+        "wood-shield",
+        "oak-shield"
+      ],
       "unlock": {
         "orgLevel": 1,
-        "heroLevel": 1
+        "heroLevel": 1,
+        "regionKey": "tutorial-0-1"
       },
       "loot": [
         "金币",
@@ -39,30 +71,34 @@
       "key": "gloom-woods",
       "name": "幽暗林地",
       "levelRange": [
-        15,
-        30
+        4,
+        8
       ],
-      "xp": 45,
-      "monster": {
-        "hp": [
-          70,
-          160
-        ],
-        "dmg": [
-          10,
-          20
-        ],
-        "dodgeTiers": [
-          "white"
-        ]
+      "xp": 35,
+      "enemies": [
+        "ash-mephyt",
+        "blaze-hound",
+        "piercing-mantis"
+      ],
+      "boss": {
+        "id": "wild-tahr",
+        "every": 10
       },
       "gold": [
         2,
-        8
+        6
+      ],
+      "baseDropRate": 0.35,
+      "blueChance": 0.12,
+      "dropPool": [
+        "iron-hammer",
+        "oak-shield"
       ],
       "unlock": {
         "orgLevel": 2,
-        "heroLevel": 15
+        "heroLevel": 4,
+        "regionKey": "mist-fringe",
+        "bossKey": "mist-fringe"
       },
       "loot": [
         "蓝装(M2)",
@@ -89,7 +125,8 @@
         "dodgeTiers": [
           "white",
           "elite"
-        ]
+        ],
+        "attackInterval": 1000
       },
       "gold": [
         5,
@@ -124,7 +161,8 @@
         "dodgeTiers": [
           "white",
           "elite"
-        ]
+        ],
+        "attackInterval": 1000
       },
       "gold": [
         9,
@@ -159,7 +197,8 @@
         "dodgeTiers": [
           "white",
           "boss"
-        ]
+        ],
+        "attackInterval": 1000
       },
       "gold": [
         15,
@@ -194,7 +233,8 @@
         "dodgeTiers": [
           "elite",
           "boss"
-        ]
+        ],
+        "attackInterval": 1000
       },
       "gold": [
         24,
@@ -229,7 +269,8 @@
         "dodgeTiers": [
           "boss",
           "legend"
-        ]
+        ],
+        "attackInterval": 1000
       },
       "gold": [
         40,

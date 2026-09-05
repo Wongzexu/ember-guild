@@ -1,0 +1,94 @@
+{
+  "monsters": {
+    "blaze-hound": {
+      "id": "blaze-hound",
+      "name": "余烬猎犬",
+      "visual": "blaze-hound",
+      "tier": "white",
+      "hp": [
+        12,
+        18
+      ],
+      "dmg": [
+        1,
+        2
+      ],
+      "element": "none"
+    },
+    "blue-sting-scorpion": {
+      "id": "blue-sting-scorpion",
+      "name": "蓝刺蝎",
+      "visual": "blue-sting-scorpion",
+      "tier": "white",
+      "hp": [
+        15,
+        25
+      ],
+      "dmg": [
+        2,
+        4
+      ],
+      "element": "none"
+    },
+    "golden-mantella": {
+      "id": "golden-mantella",
+      "name": "金曼特拉",
+      "visual": "golden-mantella",
+      "tier": "elite",
+      "hp": [
+        40,
+        60
+      ],
+      "dmg": [
+        3,
+        5
+      ],
+      "element": "none"
+    },
+    "ash-mephyt": {
+      "id": "ash-mephyt",
+      "name": "烬雾魔精",
+      "visual": "ash-mephyt",
+      "tier": "white",
+      "hp": [
+        26,
+        40
+      ],
+      "dmg": [
+        3,
+        5
+      ],
+      "element": "none"
+    },
+    "piercing-mantis": {
+      "id": "piercing-mantis",
+      "name": "穿刺刀螳",
+      "visual": "piercing-mantis",
+      "tier": "white",
+      "hp": [
+        40,
+        60
+      ],
+      "dmg": [
+        4,
+        7
+      ],
+      "element": "none"
+    },
+    "wild-tahr": {
+      "id": "wild-tahr",
+      "name": "狂野塔尔",
+      "visual": "wild-tahr",
+      "tier": "elite",
+      "hp": [
+        70,
+        100
+      ],
+      "dmg": [
+        6,
+        10
+      ],
+      "element": "none"
+    }
+  }
+}

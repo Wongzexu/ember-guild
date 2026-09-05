@@ -3,6 +3,9 @@ import {
   createHero,
   heroStats,
   heroAttackRange,
+  heroAttackSpeed,
+  heroArmor,
+  armorReduction,
   heroDamageModifiers,
   heroHitValue,
   heroCoreHitRules,
@@ -23,11 +26,21 @@ describe("hero 引擎（NUMBERS §3.5 占位）", () => {
     expect(s.vit).toBe(12);
     expect(s.int).toBe(5);
     expect(s.agi).toBe(7);
+    expect(h.origin).toMatchObject({ prototype: "Sworn Defender", connection: "oath-echo" });
+    expect(h.background).toContain("远古护卫");
     expect(s.maxHp).toBe(100 + 12 * 12);
     // VIT12 → 1−300/312 = 3.846%
     expect(s.physRes).toBeCloseTo(3.846, 3);
     expect(s.magRes).toBeCloseTo(3.846, 3);
-    expect(h.weaponId).toBe("copper-hammer");
+    // 起始武器 = 铸成白装实例入 mainhand（#01：weaponId 字段废除）
+    expect(h.equipment.mainhand).toEqual({
+      id: 1,
+      baseId: "copper-hammer",
+      rarity: "white",
+      affixes: [],
+    });
+    expect(Object.keys(h.equipment).length).toBe(8);
+    expect(h.weaponId).toBeUndefined();
   });
 
   it("升级增益：Lv5 STR=12+4×1.4+5(天赋)=22.6、VIT=18", () => {
@@ -92,9 +105,9 @@ describe("hero 引擎（NUMBERS §3.5 占位）", () => {
     // Lv30 STR = 12+29×1.4+5+3 = 60.6 → (1+0.606) × 1.15
     expect(min).toBe(Math.floor(1 * 1.606 * 1.15));
     expect(max).toBe(Math.floor(3 * 1.606 * 1.15));
-    // 条件词条：武器被换成法杖则失效
-    const caster = { ...h, weaponId: "not-found" };
-    expect(heroDamageModifiers(caster).meleePct).toBe(0);
+    // 条件词条：主手无武器（空手）则不生效
+    const bare = { ...h, equipment: { ...h.equipment, mainhand: null } };
+    expect(heroDamageModifiers(bare).meleePct).toBe(0);
   });
 
   it("击杀回血 50% 上限封顶、战败撤回回满", () => {
@@ -133,5 +146,77 @@ describe("hero 命中攻击值桶（#12 · NUMBERS §4.1 六核口径）", () =>
     const strint = heroCoreHitRules("strint");
     expect(strint.phys.stat).toBe("str");
     expect(strint.mag.stat).toBe("int");
+  });
+});
+
+describe("#02 装备→战力接线（NUMBERS §4.1 / 蓝图 #02）", () => {
+  const withMain = (hero, inst) => ({ ...hero, equipment: { ...hero.equipment, mainhand: inst } });
+  const withOff = (hero, inst) => ({ ...hero, equipment: { ...hero.equipment, offhand: inst } });
+  const mk = (id, baseId, rarity, affixes) => ({ id, baseId, rarity, affixes });
+
+  it("+STR 词缀折进 heroStats → 自动流进命中攻击值桶", () => {
+    const h = withMain({ ...createHero("anvil"), level: 5, xp: 388 }, mk(2, "copper-hammer", "blue", [
+      { affix: "flat_str", stat: "str", value: 2 },
+    ]));
+    expect(heroStats(h).str).toBeCloseTo(22.6 + 2, 5);
+    expect(heroHitValue(h).phys).toBeCloseTo(12 * 10 + 24.6 * 5, 5);
+  });
+
+  it("伤害区间 = (基底+Σflat_phys) × (1+STR/100) × (1+Σ增伤%)，增伤桶内加算", () => {
+    const h = withMain(createHero("anvil"), mk(2, "copper-hammer", "blue", [
+      { affix: "flat_phys", value: 2 },
+      { affix: "phys_damage_pct", value: 10 },
+    ]));
+    // Lv1 STR12 → (1+2)×1.12×1.10 = 4.0458 / (3+2)×1.232 = 6.7433
+    const [min, max] = heroAttackRange(h);
+    expect(min).toBe(Math.floor(3 * 1.12 * 1.1));
+    expect(max).toBe(Math.floor(5 * 1.12 * 1.1));
+  });
+
+  it("攻速 = BPS × (1 + DEX/100 + 天赋% + 词缀% + 基底隐含%)", () => {
+    // 铁锤隐含 +3%：Lv1 DEX8 → 1.0×(1+0.08+0.03) = 1.11
+    const lv1 = withMain(createHero("anvil"), mk(2, "iron-hammer", "white", []));
+    expect(heroAttackSpeed(lv1)).toBeCloseTo(1.11, 5);
+    // Lv25（含 Lv20 天赋 DEX+2 → 34）天赋攻速+10%：1.0×(1+0.34+0.03+0.10) = 1.47
+    const lv25 = withMain({ ...createHero("anvil"), level: 25, xp: 12360 }, mk(2, "iron-hammer", "white", []));
+    expect(heroAttackSpeed(lv25)).toBeCloseTo(1.47, 5);
+  });
+
+  it("护甲 = Σ(基底+flat 词缀)；减伤 = 1−300/(300+护甲)（K_甲=300）", () => {
+    const oak = mk(2, "oak-shield", "white", []);
+    expect(heroArmor(withOff(createHero("anvil"), oak))).toBe(22);
+    expect(armorReduction(withOff(createHero("anvil"), oak))).toBeCloseTo(
+      (1 - 300 / 322) * 100,
+      5
+    );
+    const reinforced = mk(3, "oak-shield", "blue", [{ affix: "flat_armor", value: 6 }]);
+    expect(heroArmor(withOff(createHero("anvil"), reinforced))).toBe(28);
+    expect(armorReduction(withOff(createHero("anvil"), reinforced))).toBeCloseTo(
+      (1 - 300 / 328) * 100,
+      5
+    );
+  });
+
+  it("+生命上限词缀折进 flatHp 桶（maxHp 联动）", () => {
+    const h = withOff(createHero("anvil"), mk(2, "wood-shield", "blue", [
+      { affix: "flat_hp", value: 15 },
+    ]));
+    expect(heroStats(h).maxHp).toBe(100 + 12 * 12 + 15);
+  });
+
+  it("空手：区间 [0,0]、护甲 0、攻速回落 BPS=1 基线", () => {
+    const bare = { ...createHero("anvil"), equipment: { ...createHero("anvil").equipment, mainhand: null } };
+    expect(heroAttackRange(bare)).toEqual([0, 0]);
+    expect(heroArmor(bare)).toBe(0);
+    expect(armorReduction(bare)).toBe(0);
+    expect(heroAttackSpeed(bare)).toBeCloseTo(1.08, 5);
+  });
+
+  it("双手大锤：伤害区间/攻速随基底（bps 0.8），词缀接线一致", () => {
+    const h = withMain(createHero("anvil"), mk(2, "great-hammer", "white", []));
+    const [min, max] = heroAttackRange(h);
+    expect(min).toBe(Math.floor(10 * 1.12));
+    expect(max).toBe(Math.floor(16 * 1.12));
+    expect(heroAttackSpeed(h)).toBeCloseTo(0.8 * 1.08, 5);
   });
 });

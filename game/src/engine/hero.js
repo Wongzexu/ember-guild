@@ -4,11 +4,10 @@
 // 天赋词条数值随 #3 过审更新；风格：显示取整（向上），底层浮点。
 
 import heroesData from "../data/heroes.json" with { type: "json" };
-import itemsData from "../data/items.json" with { type: "json" };
+import { emptyEquipment, baseOf, forgeInstance, equippedItems, allAffixes, equipmentAffixTotal } from "./equipment.js";
 import { xpToReach, levelFromXp, xpToNext } from "./xp.js";
 
 const HERO_DEFS = new Map(heroesData.heroes.map((h) => [h.class, h]));
-const ITEMS = new Map(itemsData.items.map((i) => [i.id, i]));
 
 export function classDef(classKey) {
   const def = HERO_DEFS.get(classKey);
@@ -30,18 +29,27 @@ function resistRate(vit) {
 }
 
 //—— 创建初始英雄（启动档：1 级、无经验）
-export function createHero(classKey) {
+// 起始武器直接铸成白装实例塞 equipment.mainhand（#01：weaponId 字段废除，
+// 主手唯一真源 = equipment.mainhand；starterItemId 从 meta.nextItemId 取）
+export function createHero(classKey, starterItemId = 1) {
   const def = classDef(classKey);
+  const equipment = emptyEquipment();
+  if (def.starterGear?.weapon && starterItemId != null) {
+    equipment.mainhand = forgeInstance(def.starterGear.weapon, starterItemId);
+  }
   return {
     id: def.id,
     class: def.class,
     name: def.name,
     title: def.title,
     personality: def.personality,
+    background: def.background,
+    origin: def.origin,
+    visual: def.visual,
     quotes: def.quotes,
     level: 1,
     xp: 0,
-    weaponId: def.starterGear?.weapon ?? null,
+    equipment,
     hp: null, // 战斗期由 startCombat/stats 初始化；null="满血待命"
   };
 }
@@ -103,6 +111,13 @@ export function heroStats(hero) {
     }
   }
 
+  // 装备词缀（#02 接线点 A）：+属性折进五维、+生命上限折进 flatHp ——
+  // 自动流进 maxHp / heroHitValue / 攻速（DEX），换装即联动面板
+  for (const a of allAffixes(hero)) {
+    if (a.stat) stats[a.stat] = (stats[a.stat] ?? 0) + a.value;
+    else if (a.affix === "flat_hp") flatHp += a.value;
+  }
+
   const maxHp = HP_BASE + stats.vit * HP_PER_VIT + flatHp;
   const baseRes = resistRate(stats.vit);
   return {
@@ -113,16 +128,10 @@ export function heroStats(hero) {
   };
 }
 
-//—— 武器（M1 仅基底：damage 区间；词缀 M3）
+//—— 武器（已穿主手实例的基底；战斗数值接线见 heroAttackRange / heroAttackSpeed）
 export function weaponOf(hero) {
-  if (!hero.weaponId) return null;
-  return ITEMS.get(hero.weaponId) ?? null;
-}
-
-export function weaponDamage(hero) {
-  const w = weaponOf(hero);
-  if (!w) return null;
-  return w.damage ?? null;
+  const inst = hero.equipment?.mainhand;
+  return inst ? baseOf(inst.baseId) : null;
 }
 
 //—— 伤害/攻速增幅（非五维天赋；M1 只接线近战增伤——攻速乘区 M2 计时钟接入，
@@ -165,15 +174,47 @@ export function heroHitValue(hero) {
   return { phys: bucket(cfg.phys), mag: bucket(cfg.mag) };
 }
 
-//—— 攻击力（M1 窄实现：伤害 = 武器区间 × (1+STR/100) × (1+Σ增伤%)；
-//    命中修正已接入 expedition.js 战斗管线（#12），伤害掷骰前由命中率闸门决定）
+//—— 攻击力（#02 接线点 B / §4.1）：区间 = (基底伤害+Σflat_phys) × (1+STR/100) × (1+Σ增伤%)；
+//    Σ增伤% 桶内加算（#3 Q3）= 天赋近战伤% + 装备物理伤%；
+//    命中修正已接入 expedition.js 战斗管线（#12），伤害掷骰前由命中率闸门决定
 export function heroAttackRange(hero) {
-  const dmg = weaponDamage(hero);
+  const main = hero.equipment?.mainhand;
+  const base = main ? baseOf(main.baseId) : null;
+  const dmg = base?.damage;
   if (!dmg) return [0, 0];
   const s = heroStats(hero);
-  const mods = heroDamageModifiers(hero);
-  const mult = (1 + s.str / 100) * (1 + mods.meleePct / 100);
-  return [Math.floor(dmg[0] * mult), Math.floor(dmg[1] * mult)];
+  const flatPhys = equipmentAffixTotal(hero, "flat_phys");
+  const dmgPct = heroDamageModifiers(hero).meleePct + equipmentAffixTotal(hero, "phys_damage_pct");
+  const mult = (1 + s.str / 100) * (1 + dmgPct / 100);
+  return [Math.floor((dmg[0] + flatPhys) * mult), Math.floor((dmg[1] + flatPhys) * mult)];
+}
+
+//—— 攻速（#02 接线点 ③ / §4.1）：武器 BPS × (1 + DEX/100 + Σ攻速%)；
+//    Σ攻速% = 天赋攻速% + 装备攻速词缀% + 基底隐含攻速%（allAffixes 一并计入）
+//    供 expedition.js nextAttackAt 时钟换算 interval = 1000 / attackSpeed
+export function heroAttackSpeed(hero) {
+  const main = hero.equipment?.mainhand;
+  const base = main ? baseOf(main.baseId) : null;
+  const bps = base?.bps ?? 1.0;
+  const dexPct = heroStats(hero).dex / 100;
+  const pct = heroDamageModifiers(hero).attackSpeedPct + equipmentAffixTotal(hero, "attack_speed_pct");
+  return bps * (1 + dexPct + pct / 100);
+}
+
+//—— 护甲（#02 接线点 ④ / §4.1 K_甲=300）：总护甲 = Σ(基底护甲 + flat 护甲词缀)；
+//    armor_pct 乘区推迟 M3（#02 Q3）；减伤与属性端抗性分层乘法，结算在 expedition.js
+export const ARMOR_K = 300;
+
+export function heroArmor(hero) {
+  let armor = 0;
+  for (const inst of equippedItems(hero)) {
+    armor += baseOf(inst.baseId).armor ?? 0;
+  }
+  return armor + equipmentAffixTotal(hero, "flat_armor");
+}
+
+export function armorReduction(hero) {
+  return (1 - ARMOR_K / (ARMOR_K + heroArmor(hero))) * 100;
 }
 
 export function xpGainHooks(hero) {
